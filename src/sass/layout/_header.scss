@@ -1,0 +1,44 @@
+.l-header {
+
+    &_top {
+        padding: 10px 0;
+
+        &-right {
+            text-align: right;
+
+            @include md {
+                font-size: 12px;
+            }
+            & .c-btn {
+                @include md {
+                    padding: 10px 12px;
+                }
+            }
+        }
+        &-search {
+            max-width: 400px;
+
+            &.theme--light.v-text-field--outlined:not(.v-input--is-focused):not(.v-input--has-state) > .v-input__control > .v-input__slot fieldset {
+                color: rgba(0, 0, 0, 0.15);
+            }
+            &.v-text-field.v-text-field--enclosed .v-text-field__details {
+                margin: 0;
+                min-height: inherit;
+
+                & .v-messages {
+                    min-height: inherit;
+                }
+            }
+        }
+    }
+    &_logo {
+        @include md {
+            max-width: 200px;
+        }
+        @include sm {
+            max-width: 160px;
+            width: 100%;
+        }
+    }
+
+}
