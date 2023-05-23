@@ -1,5 +1,5 @@
 {
-    "basic": [],
+    "basic": ["mtown:kuroco2023"],
     "ip_restrictions": [],
     "redirects": [],
     "rewrites": [
