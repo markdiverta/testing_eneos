@@ -251,15 +251,15 @@
     }
     &_fb {
         background-color: #35629A;
-        &::before {
-            @include fontawesome_brand('\f39e');
-        }
+        // &::before {
+        //     @include fontawesome_brand('\f39e');
+        // }
     }
     &_twitter {
         background-color: #55ACEE;
-        &::before {
-            @include fontawesome_brand('\f099');
-        }
+        // &::before {
+        //     @include fontawesome_brand('\f099');
+        // }
     }
     &_hatena {
         background-color: #1B76BC;
@@ -286,24 +286,28 @@
         background-color: #6CC655;
     }
     &_social {
-        padding: 8px 12px;
+        padding: 5px 12px;
         margin: 0 2px 5px;
         font-size: 0.8em;
 
-        &.--icon {
-            padding: 8px 12px 8px 32px;
-        }
-        &::before {
-            color: $text-color-light;
-            position: absolute;
-            left: 12px;
-            color: #fff;
-            font-size: 1.15em;
-            top: 50%;
-            transform: translateY(-49%);
-        }
+        // &.--icon {
+        //     padding: 8px 12px 8px 32px;
+        // }
+        // &::before {
+        //     color: $text-color-light;
+        //     position: absolute;
+        //     left: 12px;
+        //     color: #fff;
+        //     font-size: 1.15em;
+        //     top: 50%;
+        //     transform: translateY(-49%);
+        // }
         &:hover {
             opacity: 0.8;
+        }
+        & .icon {
+            @include fz(15);
+            padding-right: 3px;
         }
     }
 }

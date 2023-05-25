@@ -507,3 +507,9 @@
         border-color: $color_main !important;
     }
 }
+
+.c-form_hideMulticheck {
+    & .v-form .v-input:first-child {
+        display: none;
+    }
+}

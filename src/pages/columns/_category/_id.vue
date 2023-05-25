@@ -189,7 +189,6 @@ export default {
                 self.category_id = content.contents_type;
                 self.items = items;
                 self.loading = false;
-                console.log(items);
                 self.nextPrevLink();
             })
             .catch(function (error) {
@@ -202,7 +201,6 @@ export default {
             this.$router.push({ path: url})
         },
         nextPrevLink() {
-            console.log('hi' + this.category_id);
             let url =
             '/rcms-api/1/content/list?topics_group_id=' + 
             this.topics_group_id +

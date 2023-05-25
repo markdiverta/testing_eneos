@@ -113,6 +113,7 @@ export default {
             validForm: true,
             loading: true,
             isSent: false,
+            form_singleOption: {}, 
             model: {},
             schema: {},
             pageName: 'お問い合わせ'
@@ -159,9 +160,20 @@ export default {
                     for (const key in columns) {
                         let result = {};
                         if (columns.hasOwnProperty(key)) {
+ 
                             result = self.$parse(columns[key], key);
                             if (columns[key].msg) {
                                 result.hint = columns[key].msg;
+                            };
+                            if (columns[key].msg.includes("[checkbox]")) {
+                                result.styleClasses += ' c-form_hideMulticheck'; 
+                            };
+                            if (result.hint && result.hint.includes("[singleChoice]")) {
+                                let col = [];
+                                col.push({
+                                    column: key,
+                                });
+                                self.form_singleOption = col;
                             };
                             if (
                                 typeof result !== 'undefined' &&
@@ -191,7 +203,7 @@ export default {
             this.validForm = true;
             var checked;
             var emptyField = false;
-            // console.log(self.$children[1].$children[0].model)
+
             for (const key in self.$children[1].$children) {
                 self.$children[1].$children[key].$children[0].$refs.myForm.validate();
                 if (self.$children[1].$children[key].$children[0].formValid === false) {
@@ -201,7 +213,18 @@ export default {
                      emptyField = true;
                      checked = true;
                 }
-            };
+                // if (self.form_singleOption) { //If the variable available means there is single choice field
+                //     for (let field in self.form_singleOption) {
+                //         for (let item in self.$children[1].$children[key].model) {
+                //             if (self.form_singleOption[field].column == item) {
+                //                 var fieldValue = ["0","1"];
+                //                 self.$children[1].$children[key].model[item] = fieldValue;
+                //             }
+                //         }
+                //     }
+                // };
+            }; 
+
             if (this.validForm) {
                 const sendModel = JSON.parse(JSON.stringify(self.model));
                 sendModel.id = this.form_id;

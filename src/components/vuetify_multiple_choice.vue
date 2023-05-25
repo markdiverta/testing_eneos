@@ -42,9 +42,10 @@ export default {
                     this.checkedCategories[key].toString()
                 );
             }
-            if (this.formValid) {
+            // if (this.formValid) {
+            //     console.log('enter 2');
                 this.$emit('model-updated', checkedJson, this.schema.model);
-            }
+            // }
         }
     },
     mounted() {

@@ -1,8 +1,14 @@
 <template>
     <div class="p-article_share l-content_padding -sm">
-        <a href="#" class="c-btn c-btn_social --icon c-btn_twitter" @click.prevent="tweetOnTwitterURL" rel="nofollow noopener">Tweet</a>
+        <a href="#" class="c-btn c-btn_social --icon c-btn_twitter" @click.prevent="tweetOnTwitterURL" rel="nofollow noopener">
+            <i class="icon mdi mdi-twitter"></i>
+            Tweet
+        </a>
         <!-- <a href="#" class="c-btn c-btn_social --icon c-btn_twitter" @click.prevent="tweetOnTwitter2" rel="nofollow noopener">Tweet</a> -->
-        <a href="#" class="c-btn c-btn_social --icon c-btn_fb" @click.prevent="shareOnFacebook" rel="nofollow noopener">Share</a>
+        <a href="#" class="c-btn c-btn_social --icon c-btn_fb" @click.prevent="shareOnFacebook" rel="nofollow noopener">
+            <i class="icon mdi mdi-facebook"></i>
+            Share
+        </a>
         <!-- <a href="#" class="c-btn c-btn_social c-btn_hatena" @click.prevent="shareOnHatena">Hatena</a>
         <a href="#" class="c-btn c-btn_social --icon c-btn_pocket" @click.prevent="saveToPocket">Pocket</a>
         <a href="#" class="c-btn c-btn_social --icon c-btn_rss" @click.prevent="subscribeToRSS">RSS</a>

@@ -136,12 +136,13 @@ export default {
                 name1: this.name1,
                 tel: this.tel,
                 address1: this.address1,
+                email_send_ng_flg: false,
             })
             .then(function (response) {
                 if (response.data.errors.length === 0) {
                     self.invitationSent = true;
                     self.userID = response.data.id; //Record new user ID
-                    self.subscribeNewsletter();     //Submit user ID for newsletter subcription
+                    // self.subscribeNewsletter();     //Submit user ID for newsletter subcription (*no longer required, use backend filter)
                 };
                 self.loading = false;
             })

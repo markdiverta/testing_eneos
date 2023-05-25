@@ -14,7 +14,7 @@
         <loading-spinner :content-checked="contentChecked" :topics="topics" />
 
         <section class="container-fluid c-blog_list" v-if="topics.length > 0">
-            <div class="row c-blog_list-item" v-for="item in topics" :key="item.id" @click="goTo(item.url)">
+            <div class="row c-blog_list-item" v-for="item in topics" :key="item.id" @click="windowOpen(item.url)">
                 <div class="col-sm-3 col-12 thumb" :class="{ '--noIMG': !item.thumb }" :style="item.thumb ? {backgroundImage: 'url(' + item.thumb + ')' } : ''"></div>
                 <div class="col">
                     <h3>{{ item.title }}</h3>
@@ -84,6 +84,9 @@ export default {
         },
         goTo(url){
             this.$router.push({ path: url})
+        },
+        windowOpen(url){
+            window.location.href = url;
         },
         updateBlog() {
             let url =
