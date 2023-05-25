@@ -44,7 +44,7 @@ export default {
               {
                 hid: 'og:url',
                 property: 'og:url',
-                content: envSettings.BASE_URL
+                content: 'https://www.mtown.my/'
               },
               {
                 hid: 'og:title',
