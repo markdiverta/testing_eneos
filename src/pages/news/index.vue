@@ -151,22 +151,32 @@ export default {
                     for (let key in response.data.list) {
                         const item = response.data.list[key];
                         let desc = item.contents
+                        let catURL = item.category_parent_id ? '/news/' + item.contents_type_slug : '/news/';
                         desc = desc.replace(/<[^>]+>/g, ''); //remove HTML
                         if (desc.length > 120) {
                             desc = desc.substring(0, 120);
                             desc += '...';
                         };
-                        if (item.slug) {
-                            url = '/news/' + item.contents_type_slug + '/' + item.slug;
+
+                        //Check if has child category or just parent category
+                        if (item.contents_type_slug && item.category_parent_id) {
+                            url = '/news/' + item.contents_type_slug + '/';
                         } else {
-                            url = '/news/' + item.contents_type_slug + '/' + item.topics_id;
+                            url = '/news/';
                         };
+                        //Check if has page slug else use page id
+                        if (item.slug) {
+                            url += item.slug;
+                        } else {
+                            url += item.topics_id;
+                        };
+
                         topics.push({
                             date: item.ymd.substring(0, 10).replaceAll('-', '.'),
                             title: item.subject,
                             desc: desc,
                             cat: item.contents_type_nm,
-                            catURL: '/news/' + item.contents_type_slug,
+                            catURL: catURL,
                             id: item.topics_id,
                             url: url,
                             thumb: item.ext_1,
