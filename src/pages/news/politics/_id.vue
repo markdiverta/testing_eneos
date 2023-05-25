@@ -105,12 +105,12 @@ export default {
             {
                 hid: 'og:image:secure_url',
                 property: 'og:image:secure_url',
-                content: 'https://mtown.g.kuroco.app/files/user/og.jpg'
+                content: 'https://api.mtown.my/files/user/og.jpg'
             },
             {
                 hid: 'og:image:url',
                 property: 'og:image:url',
-                content: 'https://mtown.g.kuroco.app/files/user/og.jpg'
+                content: 'https://api.mtown.my/files/user/og.jpg'
             },
             {
                 hid: 'twitter:card',

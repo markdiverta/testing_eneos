@@ -16,7 +16,7 @@ jobs:
       - name: "Get branch name and sha"
         id: get_branch
         run: |
-          PR=$(curl -H "Authorization: token b08e670dba5f6deb48185fc387f6b373" https://mtown.g.kuroco.app/direct/menu/github/?pr=${{ github.event.issue.pull_request.url }})
+          PR=$(curl -H "Authorization: token 444e5aedae994b8b1d8155dec3a0cb0d" https://api.mtown.my/direct/menu/github/?pr=${{ github.event.issue.pull_request.url }})
           echo "branch=$(echo $PR | jq -r '.ref')" >> $GITHUB_OUTPUT
           echo "sha=$(echo $PR | jq -r '.sha')" >> $GITHUB_OUTPUT
       - name: Checkout Repo
@@ -46,9 +46,9 @@ jobs:
       - name: Webhook
         uses: diverta/workflow-webhook@v2
         env:
-          webhook_url: "https://mtown.g.kuroco.app/direct/menu/github/"
-          webhook_secret: "b08e670dba5f6deb48185fc387f6b373"
-          data: '{"single_zip":"1","domain":"mtown.g.kuroco-front.app","pr":"${{ github.event.issue.pull_request.url }}",  "repository":"${{ github.repository }}", "run_id":"${{ github.run_id }}", "hash":"${{ steps.get_branch.outputs.sha }}"}'
+          webhook_url: "https://api.mtown.my/direct/menu/github/"
+          webhook_secret: "444e5aedae994b8b1d8155dec3a0cb0d"
+          data: '{"single_zip":"1","domain":"www.mtown.my","pr":"${{ github.event.issue.pull_request.url }}",  "repository":"${{ github.repository }}", "run_id":"${{ github.run_id }}", "hash":"${{ steps.get_branch.outputs.sha }}"}'
           
   #for Push
   pushed_build:
@@ -75,10 +75,10 @@ jobs:
         with:
           name: ${{ github.sha }}-${{ github.run_id }}
           path: dist.zip
-          retention-days: 7
+          retention-days: 1
       - name: Webhook
         uses: diverta/workflow-webhook@v2
         env:
-          webhook_url: "https://mtown.g.kuroco.app/direct/menu/github/"
-          webhook_secret: "b08e670dba5f6deb48185fc387f6b373"
-          data: '{"single_zip":"1","domain":"mtown.g.kuroco-front.app", "repository":"${{ github.repository }}", "run_id":"${{ github.run_id }}", "hash":"${{ github.sha }}"}'
+          webhook_url: "https://api.mtown.my/direct/menu/github/"
+          webhook_secret: "444e5aedae994b8b1d8155dec3a0cb0d"
+          data: '{"single_zip":"1","domain":"www.mtown.my", "repository":"${{ github.repository }}", "run_id":"${{ github.run_id }}", "hash":"${{ github.sha }}"}'

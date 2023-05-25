@@ -351,7 +351,7 @@ export default {
         //     try {
         //     console.log('enter');
         //     let routesPath = [];
-        //     let res = await axios.get('https://mtown.g.kuroco.app/rcms-api/1/content/details/');
+        //     let res = await axios.get('https://api.mtown.my/rcms-api/1/content/details/');
         //     console.log(res);
         //     let data = res.data;
         //     data?.list?.forEach(page => {
@@ -369,7 +369,7 @@ export default {
         //     const routes = []
             
         //     for (const category of categories) {
-        //         const response = await axios.get(`https://mtown.g.kuroco.app/rcms-api/1/content/list/?topics_group_id=${category}`);
+        //         const response = await axios.get(`https://api.mtown.my/rcms-api/1/content/list/?topics_group_id=${category}`);
         //         const articles = response;
         //             for (const article of articles) {
         //                 console.log('1');
@@ -387,7 +387,7 @@ export default {
             // const categories = ['politics', 'covid-19', 'economic', 'nikkei', 'others']
             const routes = []
             // for (const category of categories) {
-              const response = await axios.get('https://mtown.g.kuroco.app/rcms-api/1/content/list?topics_group_id=1')
+              const response = await axios.get('https://api.mtown.my/rcms-api/1/content/list?topics_group_id=1')
               const articles = response.data.list
               for (const article of articles) {
                 // let id = article.topics_id;
@@ -409,7 +409,7 @@ export default {
             return routes
                 
                 // let routesPath = [];
-                // let res = await axios.get('https://mtown.g.kuroco.app/rcms-api/1/content/list?topics_group_id%5B%5D=1');
+                // let res = await axios.get('https://api.mtown.my/rcms-api/1/content/list?topics_group_id%5B%5D=1');
                 // let data = res.data;
                 // data?.list?.forEach(page => {
                 // let slug = page.slug.length != 0 ? page.slug : page.subject.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
@@ -483,11 +483,11 @@ export default {
                 var index = topics.indexOf(topic)+1;
                 var apiUrl;
                 // if (process.env.NODE_ENV === 'development') {
-                //     apiUrl = 'https://mtown.g.kuroco.app/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=2';
+                //     apiUrl = 'https://api.mtown.my/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=2';
                 // } else {
-                //     apiUrl = 'https://mtown.g.kuroco.app/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=9999999';
+                //     apiUrl = 'https://api.mtown.my/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=9999999';
                 // };
-                apiUrl = 'https://mtown.g.kuroco.app/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=999';
+                apiUrl = 'https://api.mtown.my/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=999';
                 var response = await axios.get(apiUrl);
                 var articles = response.data.list;
                 // console.log(topic.catID);
@@ -551,7 +551,7 @@ export default {
             //     console.log('hahah');
             // };
 
-            // const response = await axios.get('https://mtown.g.kuroco.app/rcms-api/1/content/list?topics_group_id=1&cnt=10')
+            // const response = await axios.get('https://api.mtown.my/rcms-api/1/content/list?topics_group_id=1&cnt=10')
             // const articles = response.data.list
             // //   console.log(response.data.pageInfo);
             // //   console.log('hihih');
