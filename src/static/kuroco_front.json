@@ -1,7 +1,10 @@
 {
     "basic": [],
     "ip_restrictions": [],
-    "redirects": [],
+    "redirects": [
+        { "source": "/eats/", "destination": "/eat/" },
+        { "source": "/lifes/", "destination": "/life/" }
+    ],
     "rewrites": [
         {
             "source": ".*",
