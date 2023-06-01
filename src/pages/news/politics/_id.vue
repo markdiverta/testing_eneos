@@ -83,14 +83,14 @@
 
 <script>
 import SocialSharing from '~/components/social_sharing.vue';
-import Sample from '~/pages/sample.vue';
+//import Sample from '~/pages/sample.vue';
 import item from '~/components/topic_detail';
 export default {
     auth: false,
     components: {
         'v-item': item,
-        SocialSharing,
-        Sample
+        SocialSharing//,
+        //Sample
     },
     head() {
       return {
