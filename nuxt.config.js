@@ -44,7 +44,7 @@ export default {
               {
                 hid: 'og:url',
                 property: 'og:url',
-                content: 'https://www.mtown.my/'
+                content: envSettings.BASE_URL
               },
               {
                 hid: 'og:title',
@@ -422,6 +422,8 @@ export default {
     */
     generate: {
         routes: async () => {
+            const apiURL = 'https://api.mtown.my';
+            const siteURL = envSettings.BASE_URL;
             const routes = [];
             const listGenerate = [];
             const topics = [
@@ -478,14 +480,16 @@ export default {
                     catID: 15
                 },
             ];
+
             // console.log(topics);
             for (const topic of topics) {
+            // if (topic.catSlug == '/news/') {
                 var index = topics.indexOf(topic)+1;
                 var apiUrl;
                 // if (process.env.NODE_ENV === 'development') {
-                //     apiUrl = 'https://api.mtown.my/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=2';
+                //     apiUrl = 'https://dev-mtown.g.kuroco.app/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=2';
                 // } else {
-                //     apiUrl = 'https://api.mtown.my/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=9999999';
+                //     apiUrl = 'https://dev-mtown.g.kuroco.app/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=9999999';
                 // };
                 apiUrl = 'https://api.mtown.my/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=999';
                 var response = await axios.get(apiUrl);
@@ -495,7 +499,7 @@ export default {
                 // console.log(topics.length);
                 // console.log('run 2');
                 // console.log(response.data.list.length);
-
+                
                 for (const article of articles) {
                     let slug;
                     let url = topic.catSlug;
@@ -520,7 +524,9 @@ export default {
                         route: url,
                         payload: { 
                             article,
-                            listGenerate
+                            listGenerate,
+                            siteURL,
+                            apiURL
                         }
                     })
                     // }
@@ -534,14 +540,8 @@ export default {
                         }
                     });
                 };
+            // };
             };
-
-            // console.log(routes);
-            // Add the /log/ route
-            // routes.push({
-            //     route: '/columns/testing/page1',
-            //     payload: {}
-            // });
 
             // routes.push('/columns/testing');
 
@@ -551,7 +551,7 @@ export default {
             //     console.log('hahah');
             // };
 
-            // const response = await axios.get('https://api.mtown.my/rcms-api/1/content/list?topics_group_id=1&cnt=10')
+            // const response = await axios.get('https://dev-mtown.g.kuroco.app/rcms-api/1/content/list?topics_group_id=1&cnt=10')
             // const articles = response.data.list
             // //   console.log(response.data.pageInfo);
             // //   console.log('hihih');
