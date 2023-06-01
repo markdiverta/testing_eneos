@@ -423,7 +423,7 @@ export default {
     generate: {
         routes: async () => {
             const apiURL = 'https://api.mtown.my';
-            const siteURL = 'https://www.mtown.my/';
+            const siteURL = 'https://www.mtown.my';
             const routes = [];
             const listGenerate = [];
             const topics = [
