@@ -160,7 +160,8 @@ export default {
                                 : parentID == '15' ? '/backnumbers/'
                                 : '';
                         };
-                        let url = item.slug ? path + item.contents_type_nm + item.slug : path + item.contents_type_nm + item.topics_id;
+                        let url = item.contents_type_slug ? path + item.contents_type_slug + '/' : path;
+                        url = item.slug ? url + item.slug : url + item.topics_id;
                         topics.push({
                             date: item.ymd.substring(0, 10).replaceAll('-', '.'),
                             title: item.subject,

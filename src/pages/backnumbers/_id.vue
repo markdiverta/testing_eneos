@@ -83,21 +83,6 @@ export default {
                 content: this.metaTitle
             },
             {
-                hid: 'og:image',
-                property: 'og:image',
-                content: this.metaOGImg
-            },
-            {
-                hid: 'og:image:secure_url',
-                property: 'og:image:secure_url',
-                content: 'https://api.mtown.my/files/user/og.jpg'
-            },
-            {
-                hid: 'og:image:url',
-                property: 'og:image:url',
-                content: 'https://api.mtown.my/files/user/og.jpg'
-            },
-            {
                 hid: 'twitter:card',
                 name: 'twitter:card',
                 content: 'summary_large_image'
@@ -115,9 +100,9 @@ export default {
         ]
       }
     },
-    async asyncData({ app, payload }) {
+    async asyncData({ app, payload, route }) {
         if (payload) {
-            let thumbnail = payload.article.ext_1 ? payload.article.ext_1 : '';
+            let thumbnail = payload.article.ext_1 ? payload.article.ext_1 : payload.apiURL + '/files/user/og.jpg';
             return {
                 metaTitle: payload.article.subject,
                 metaOGImg: thumbnail

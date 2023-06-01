@@ -15,6 +15,13 @@
             <p class="text-center">Content not found</p>
         </section>
         <section v-else>
+            
+            <!-- <span style="display: none; opacity: 0">
+            <Sample/>
+            SITE URL: {{metaURL}}<br>
+            TITLE: {{metaTitle}}<br>
+            API URL: {{apiURL}}<br>
+            </span> -->
 
             <section class="p-article_wrap">
                 <div class="p-article_featureIMG">
@@ -76,12 +83,14 @@
 
 <script>
 import SocialSharing from '~/components/social_sharing.vue';
+import Sample from '~/pages/sample.vue';
 import item from '~/components/topic_detail';
 export default {
     auth: false,
     components: {
         'v-item': item,
-        SocialSharing
+        SocialSharing,
+        Sample
     },
     head() {
       return {
@@ -91,6 +100,11 @@ export default {
                 hid: 'og:title',
                 property: 'og:title',
                 content: this.metaTitle
+            },
+            {
+                hid: 'og:url',
+                property: 'og:url',
+                content: this.metaURL,
             },
             {
                 hid: 'og:description',
@@ -105,12 +119,12 @@ export default {
             {
                 hid: 'og:image:secure_url',
                 property: 'og:image:secure_url',
-                content: 'https://api.mtown.my/files/user/og.jpg'
+                content: this.metaOGImg
             },
             {
                 hid: 'og:image:url',
                 property: 'og:image:url',
-                content: 'https://api.mtown.my/files/user/og.jpg'
+                content: this.metaOGImg
             },
             {
                 hid: 'twitter:card',
@@ -135,7 +149,7 @@ export default {
         ]
       }
     },
-    async asyncData({ app, payload }) {
+    async asyncData({ app, payload, route }) {
         // const route = app.context.route.params;
         // const url =
         // '/rcms-api/1/content/details/' +
@@ -143,7 +157,7 @@ export default {
         // const response = await app.$axios.$get(url);
         // const content = response.details;
         if (payload) {
-            let thumbnail = payload.article.ext_1 ? payload.article.ext_1 : '';
+            let thumbnail = payload.article.ext_1 ? payload.article.ext_1 : payload.apiURL + '/files/user/og.jpg';
             let description = payload.article.contents.replace(/<[^>]+>/g, '').replace(/[\r\n]+/g, '');
             if (description.length > 120) {
                 description = description.substring(0, 120) + '...';
@@ -151,7 +165,11 @@ export default {
             return {
                 metaTitle: payload.article.subject,
                 metaDescription: description,
-                metaOGImg: thumbnail
+                metaOGImg: thumbnail,
+                metaURL: `${payload.siteURL}${route.fullPath}`,
+                apiURL: payload.apiURL,
+                // testing1: app.router.options.base,
+                // testing2: payload.base2,
             }
         };
     },
