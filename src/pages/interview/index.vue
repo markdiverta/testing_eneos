@@ -29,7 +29,7 @@
                 </div>
             </section>
             <section class="container-fluid mt-4 c-blog_list" v-if="topics.length > 9">
-                <div class="row c-blog_list-item" v-for="(item, index) in topics" v-if="index > 1" :key="item.id" @click="goTo(item.url)">
+                <div class="row c-blog_list-item" v-for="(item, index) in topics" v-if="index > 7" :key="item.id" @click="goTo(item.url)">
                     <div class="col-sm-3 col-12 thumb" :class="{ '--noIMG': !item.thumb }" :style="item.thumb ? {backgroundImage: 'url(' + item.thumb + ')' } : ''"></div>
                     <div class="col">
                         <h3>{{ item.title }}</h3>

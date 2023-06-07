@@ -691,7 +691,7 @@ export default {
                     ];
                     for (let key in response.data.list) {
                         let item = response.data.list[key];
-                        let newsSlug = item.contents_type_slug ? '/' + item.contents_type_slug + '/' : '';
+                        let newsSlug = item.contents_type_slug ? item.contents_type_slug + '/' : '';
                         let title = item.subject;
                         let catSlug = '';
                         let url;
