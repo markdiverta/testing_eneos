@@ -142,16 +142,13 @@ export default {
         ['@nuxtjs/pwa', { workbox: false, autoRegister: false, manifest: { publicPath: '/_nuxt/', crossorigin: 'use-credentials' } }],
         'nuxt-i18n',
         ['@nuxtjs/google-gtag', {
-            id: 'G-5HDZ7M74GM',
+            id: 'G-50K7BNS543',
             config: {
                 anonymize_ip: true, // anonymize IP
                 send_page_view: false // might be necessary to avoid duplicated page track on page reload
             },
             debug: true, // enable to track in dev mode
             disableAutoPageTrack: true, // disable if you don't want to track each page route with router.afterEach(...).
-            additionalAccounts: [{
-                id: 'UA-260921713-1' // required if you are adding additional accounts
-            }]
         }],
     ],
     proxy: {
