@@ -5,12 +5,13 @@
 }
 
 html, .v-application {
-  font-family: 'メイリオ', 'Meiryo', 'MS ゴシック', 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', sans-serif;
+  font-family: 'メイリオ', 'Meiryo', 'MS ゴシック', 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', sans-serif !important;
 }
 
 body {
   font-size: 14px;
   overflow-x: hidden;
+  margin: 0;
 }
 
 h1,

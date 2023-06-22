@@ -7,12 +7,13 @@
 /*
  foundation
 -------------------------------------------------- */
-@import "foundation/_normalize.scss";
+// @import "foundation/_normalize.scss";
 @import "foundation/_common.scss";
 
 /*
  Vendor
 -------------------------------------------------- */
+@import 'vendors/bootstrap/scss/bootstrap.scss';
 // @import 'vendors/fontawesome/fontawesome.scss';
 // @import 'vendors/fontawesome/solid.scss';
 // @import 'vendors/fontawesome/brands.scss';
@@ -33,12 +34,12 @@
 @import "object/component/_text.scss";
 @import "object/component/_navi.scss";
 @import "object/component/_icon.scss";
-@import "object/component/_table.scss";
+// @import "object/component/_table.scss";
 @import "object/component/_form.scss";
 @import "object/component/_article.scss";
-@import "object/component/_iframe.scss";
+// @import "object/component/_iframe.scss";
 
 
 /* project ----------------------------- */
-@import "object/project/_home.scss";
+// @import "object/project/_home.scss";
 @import "object/project/_pages.scss";

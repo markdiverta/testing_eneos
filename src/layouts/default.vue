@@ -136,87 +136,8 @@
         
         <v-main>
             <section class="container-fluid l-content_maxWidth-lg">
-            <section class="row">
-                <section class="col-md-9 col-12" fluid>
-                    <div class="l-page_content">
-                    <nuxt />
-                    </div>
-                </section>
-                <section class="col-md-3 col-12 sidebar" fluid> 
-                    <div class="l-content_padding -xs">
-                        
-                        <div v-if="eBookLoaded" class="l-content_padding -sm pt-0">
-                            <h2 class="c-heading_bg --bg_grey c-heading_h3">最新号eBook</h2>
-                            <img class="c-img_fluid c-clickable mb-3" 
-                                @click="goTo(sidebarEbook.url)"
-                                :src="sidebarEbook.thumb"
-                            >
-                            <div class="text-center">
-                                <a class="c-btn c-btn_md c-btn_main-dark" href="/backnumbers/">バックナンバーはこちら</a>
-                            </div>
-                        </div>
-
-                        <div v-if="sidebarRanking.length > 0" class="l-content_padding -xs">
-                            <h2 class="c-heading_bg --bg_grey c-heading_h3">アクセスランキング</h2>
-                            <div class="container c-sidebar_list">
-                                <div class="row c-sidebar_list-item c-clickable" v-for="(item, index) in sidebarRanking" :key="index" @click="goTo(item.url)">
-                                    <div class="col-5 thumb" :style="{backgroundImage: 'url(' + item.thumb + ')' }">
-                                    </div>
-                                    <div class="col">
-                                        <h4 class="c-sidebar_list-heading">{{ item.title }}</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div v-if="sidebarPR.length > 0" class="l-content_padding -xs">
-                            <h2 class="c-heading_bg --bg_grey c-heading_h3">広告(PR)</h2>
-                            <img class="c-img_fluid mb-3 c-clickable" 
-                                v-for="(item, index) in sidebarPR" :key="index"
-                                @click="goTo(item.url)"
-                                :src="item.thumb"
-                            >
-                        </div>
-
-                        <div class="l-content_padding -xs">
-                            <h2 class="c-heading_bg --bg_grey c-heading_h3">SNS</h2>
-                            <!-- <div id="fb-root"></div>
-                            <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v16.0&appId=122192827922401&autoLogAppEvents=1" nonce="nH8NqgQJ"></script> -->
-                            <!--<div class="fb-page" data-href="https://www.facebook.com/weeklymtown" data-tabs="timeline" data-width="282" data-height="500" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/weeklymtown" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/weeklymtown">マレーシア生活情報誌　週刊M-town</a></blockquote></div> -->
-
-                            <!-- <div id="fb-root"></div>
-                            <div class="fb-page" data-href="https://www.facebook.com/weeklymtown" data-show-posts="true"  data-width="" data-height="500" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false"><blockquote cite="https://www.facebook.com/weeklymtown" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/weeklymtown">マレーシア生活情報誌　週刊M-town</a></blockquote></div> -->
-                        
-                            <!-- <div class="wb-facebook">
-                                <div class="fb-page" data-href="https://www.facebook.com/weeklymtown" data-small-header="true" data-hide-cover="false" data-show-facepile="false" data-show-posts="true">
-                                    <div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/weeklymtown"><a href="https://www.facebook.com/weeklymtown">Mytown Facebook</a></blockquote></div>
-                                </div>
-                            </div> -->
-
-                            <client-only>
-                                <div class="l-sidebar_fb">
-                                    <div id="fb-root"></div>
-                                    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v16.0" nonce="Q2mDUmEw"></script>
-                                    <div class="fb-page" data-href="https://www.facebook.com/weeklymtown" data-show-posts="true"  data-width="" data-height="500" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false"><blockquote cite="https://www.facebook.com/weeklymtown" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/weeklymtown">マレーシア生活情報誌　週刊M-town</a></blockquote></div>
-                                </div>
-                            </client-only>
-                        
-                        </div>
-
-                        <div class="l-content_padding -xs">
-                            <div id="twitter-timeline" class="l-sidebar_twitter"></div>
-                        </div>
-
-                        <div v-if="sidebarRelated.length > 0" class="l-content_padding -xs">
-                            <h2 class="c-heading_bg --bg_grey c-heading_h3">関連メディア</h2>
-                            <img class="c-img_fluid mb-3 c-clickable" 
-                                v-for="(item, index) in sidebarRelated" :key="index"
-                                @click="goTo(item.url)"
-                                :src="item.thumb"
-                            >
-                        </div>
-                    </div>
-                </section>
+            <section class="row l-page_content-row">
+                <nuxt />
             </section>
             </section>
         </v-main>
@@ -536,9 +457,11 @@ export default {
         }
         
         // this.contentMagazine();
-        this.contentEbook();
-        this.contentSidebarAds();
-        this.contentRanking();
+        // if (!window.location.pathname.includes('/news/politics/')) {
+        //     this.contentEbook();
+        //     this.contentSidebarAds();
+        //     this.contentRanking();
+        // };
         this.menuColumnList();
     },
     beforeDestroy() {
@@ -550,6 +473,9 @@ export default {
         this.currentYear = year;
     },
     computed: {
+        politicsPage() {
+            return this.$route.path.includes('/news/politics/');
+        },
         searchCat() {
             return this.$route.query.contents_type;
         },

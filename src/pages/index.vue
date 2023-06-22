@@ -1,5 +1,9 @@
 <template>
 <section class="l-content_maxWidth-lg">
+<section class="row l-page_content-row">
+<section class="col-md-9 col-12" fluid>
+
+    <div class="l-page_content">
 
         <carousel v-if="carouselContentLoaded" class="c-carousel l-content_padding -xs pb-0" 
             :autoplay="true" :nav="false" :dots="false" :loop="true" navClass=""
@@ -155,7 +159,12 @@
             </div>
         </section>
 
+    </div>
+
 </section>
+<Sidebar :contentRanking="ranking" :contentEBook="sidebarEbook" :contentAds="sidebarAds" :contentPR="sidebarPR"/>
+</section><!--l-page_content-row-->
+</section><!--container-fluid-->
 </template>
 
 <script>
@@ -171,6 +180,8 @@ import fieldVuetifyPrefecture from '../components/vuetify_prefecture.vue';
 import fieldVuetifyMultipleChoice from '../components/vuetify_multiple_choice.vue';
 import fieldVuetifySingleChoice from '../components/vuetify_single_choice.vue';
 import fieldVuetifySingleOption from '../components/vuetify_single_option.vue';
+
+import Sidebar from '~/components/sidebar.vue';
 
 // import carousel from 'vue-owl-carousel';
 
@@ -216,7 +227,11 @@ export default {
             meta: {
                 title: 'MTown - マレーシアの週刊情報誌',
                 description: 'To be a guiding light on the life of journey that is not easily visible'
-            }
+            },
+            ranking: [],
+            sidebarEbook: [],
+            sidebarAds: [],
+            sidebarPR: [],
         };
     },
     head() {
@@ -236,10 +251,21 @@ export default {
         ]
         }
     },
+    async asyncData({ app, payload, route }) {
+        if (payload) {
+            return {
+                ranking: payload.contentRanking,
+                sidebarEbook: payload.contentEbook,
+                sidebarAds: payload.contentAds,
+                sidebarPR: payload.contentPR
+            }
+        };
+    },
     components: {
         'vue-form-generator': VueFormGenerator.component,
         // carousel
         ClientOnly: () => import('vue-client-only'),
+        Sidebar
     },
     mounted() {
         this.listNews();

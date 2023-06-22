@@ -1,6 +1,9 @@
 <template>
-    <section class="p-page_blog l-content_maxWidth-lg l-content_padding -xs l-container">
-        
+<section class="p-page_blog l-content_maxWidth-lg l-container">
+<section class="row l-page_content-row">
+<section class="col-md-9 col-12" fluid>
+
+    <div class="l-page_content">        
         <div class="l-breadcum">
             <!--<a href="/"><i aria-hidden="true" class="icon home item mdi mdi-home"></i></a>-->
             <!-- <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i> -->
@@ -15,7 +18,7 @@
 
         <section v-if="topics.length > 0">
             <section class="container-fluid mt-4 c-blog_list" v-if="topics.length > 0">
-                <div class="row c-blog_list-item" v-for="(item, index) in topics" :key="item.id" @click="goTo(item.url)">
+                <div class="row c-blog_list-item" v-for="(item, index) in topics" :key="item.id" @click="windowOpen(item.url)">
                     <div class="col-sm-3 col-12 thumb" :class="{ '--noIMG': !item.thumb }" :style="item.thumb ? {backgroundImage: 'url(' + item.thumb + ')' } : ''"></div>
                     <div class="col">
                         <h3>{{ item.title }}</h3>
@@ -63,15 +66,22 @@
             />
         </div>
 
-    </section>
+    </div>
+
+</section>
+<Sidebar :contentRanking="ranking" :contentEBook="sidebarEbook" :contentAds="sidebarAds" :contentPR="sidebarPR"/>
+</section><!--l-page_content-row-->
+</section><!--container-fluid-->
 </template>
 
 <script>
 import LoadingSpinner from '~/components/loading_spinner.vue';
+import Sidebar from '~/components/sidebar.vue';
 export default {
     auth: false,
     components: {
-        LoadingSpinner
+        LoadingSpinner,
+        Sidebar
     },
     data() {
         return {
@@ -88,6 +98,10 @@ export default {
             paginationMin: 8,
             keywords: '',
             contentChecked: false,
+            ranking: [],
+            sidebarEbook: [],
+            sidebarAds: [],
+            sidebarPR: [],
         };
     },
     computed: {
@@ -101,6 +115,9 @@ export default {
         },
         goTo(url){
             this.$router.push({ path: url})
+        },
+        windowOpen(url){
+            window.location.href = url;
         },
         updateBlog() {
             let url =

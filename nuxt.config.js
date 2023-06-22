@@ -110,7 +110,11 @@ export default {
    ** Nuxt.js dev-modules
    */
     buildModules: [
-        '@nuxtjs/vuetify',
+        // '@nuxtjs/vuetify',
+        ['@nuxtjs/vuetify', {
+            optionsPath: '@/vuetify.options.js',
+            treeShake: true,
+        }]
         // '@nuxtjs/fontawesome',
         // ['@nuxtjs/fontawesome', {
         //     component: 'fas',
@@ -423,6 +427,7 @@ export default {
             const siteURL = 'https://www.mtown.my';
             const routes = [];
             const listGenerate = [];
+            const generateLimit = 999;
             const topics = [
                 {
                     catSlug: '/news/',
@@ -478,25 +483,124 @@ export default {
                 },
             ];
 
-            // console.log(topics);
-            for (const topic of topics) {
+            // routes.push({
+            //     route: '/sample/',
+            //     payload: {}
+            // });
+            
+            //Sidebar eBook API
+            const apiEbook = 'https://api.mtown.my/rcms-api/1/content/details/47641';
+            const responseEbook = await axios.get(apiEbook);
+            const contentEbook = [];
+            const itemEbook = responseEbook.data.details;
+            contentEbook.push({
+                url: itemEbook.ext_1,
+                thumb: itemEbook.ext_2
+            });
+            // contentEbook.url = itemEbook.ext_1;
+            // contentEbook.thumb = itemEbook.ext_2;
+
+
+            //Sidebar Ranking API
+            const apiRanking = 'https://api.mtown.my/rcms-api/1/content/ranking?cnt=5';
+            const responseRanking = await axios.get(apiRanking);
+            const contentRanking = [];
+            const topicsCategory = [
+                {
+                    catSlug: '/news/',
+                    catID: 1
+                },
+                {
+                    catSlug: '/eat/',
+                    catID: 7
+                },
+                {
+                    catSlug: '/life/',
+                    catID: 8
+                },
+                {
+                    catSlug: '/feature/',
+                    catID: 9
+                },
+                {
+                    catSlug: '/interview/',
+                    catID: 10
+                },
+                {
+                    catSlug: '/j-league/',
+                    catID: 14
+                },
+            ];
+            for (let key in responseRanking.data.list) {
+                let item = responseRanking.data.list[key];
+                let newsSlug = item.contents_type_slug ? '/' + item.contents_type_slug + '/' : '';
+                let title = item.subject;
+                let catSlug = '';
+                let url;
+                if (title.length > 35) {
+                    title = title.substring(0, 35);
+                    title += '...';
+                };
+                for (let cat in topicsCategory) {
+                    if (topicsCategory[cat].catID == item.topics_group_id) {
+                        catSlug = topicsCategory[cat].catSlug;
+                        break;
+                    }
+                };
+                url = catSlug + newsSlug + item.slug;
+                contentRanking.push({
+                    title: title,
+                    url: url,
+                    thumb: item.ext_1,
+                });
+            };
+
+            //Sidebar ADS & PR API
+            const apiSidebarAds = 'https://api.mtown.my/rcms-api/1/content/details/47640';
+            const responseAds = await axios.get(apiSidebarAds);
+            var contentAds = [];
+            var contentPR = [];
+            const itemAds = responseAds.data.details;
+            const responseAdstopics = [];
+            const responseAdsRelated = [];
+            for (let key in itemAds.ext_2) {
+                let thumb = itemAds.ext_2[key];
+                responseAdstopics.push({
+                    title: itemAds.ext_3[key].title,
+                    url: itemAds.ext_3[key].url,
+                    thumb: thumb,
+                });
+            };
+            for (let key in itemAds.ext_4) {
+                let thumb = itemAds.ext_4[key];
+                responseAdsRelated.push({
+                    title: itemAds.ext_5[key].title,
+                    url: itemAds.ext_5[key].url,
+                    thumb: thumb,
+                });
+            };
+            contentAds = responseAdsRelated;
+            contentPR = responseAdstopics;
+            
+            //Topics API
+            for (const topic of topics) { 
             // if (topic.catSlug == '/news/') {
                 var index = topics.indexOf(topic)+1;
                 var apiUrl;
                 // if (process.env.NODE_ENV === 'development') {
-                //     apiUrl = 'https://dev-mtown.g.kuroco.app/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=2';
+                //     apiUrl = 'https://api.mtown.my/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=2';
                 // } else {
-                //     apiUrl = 'https://dev-mtown.g.kuroco.app/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=9999999';
+                //     apiUrl = 'https://api.mtown.my/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=9999999';
                 // };
-                apiUrl = 'https://api.mtown.my/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=999';
+                apiUrl = 'https://api.mtown.my/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=' + generateLimit;
                 var response = await axios.get(apiUrl);
                 var articles = response.data.list;
-                // console.log(topic.catID);
-                // console.log('run 1');
-                // console.log(topics.length);
-                // console.log('run 2');
-                // console.log(response.data.list.length);
-                
+
+                // console.log('Execute log');
+                // console.log(apiUrl);
+                // console.log(response.data.pageInfo.totalPageCnt);
+
+                // Normal loop without pagination
                 for (const article of articles) {
                     let slug;
                     let url = topic.catSlug;
@@ -522,13 +626,63 @@ export default {
                         payload: { 
                             article,
                             listGenerate,
+                            contentRanking,
+                            contentEbook,
+                            contentAds,
+                            contentPR,
                             siteURL,
                             apiURL
                         }
                     })
                     // }
-                }
-                // Push all generate dynamic route in to log page at the end of topics loop
+                };
+
+                //Additional loop for pagination
+                let pageNum = response.data.pageInfo.totalPageCnt;
+                if (pageNum >= 2){
+                    for (let i = 2; i <= pageNum; i++){
+                        let paginationURL = 'https://api.mtown.my/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=' + generateLimit + '&pageID=' + i;
+                        let response = await axios.get(paginationURL);
+                        let articles = response.data.list;
+                        // console.log(paginationURL);
+                        // console.log(response.data.pageInfo);
+
+                        for (const article of articles) {
+                            let slug;
+                            let url = topic.catSlug;
+                            
+                            if (article.contents_type_slug) { //If categories
+                                let encodeSlug = article.contents_type_slug;
+                                url += encodeSlug + '/';
+                            };
+                            if (/%[0-9a-fA-F]{2}/.test(article.slug)) { //If slug contain japanese text or percent-encoded characters
+                                slug = article.topics_id
+                            } else {
+                                slug = article.slug ? article.slug : article.topics_id
+                            };
+                            url += slug;
+                            listGenerate.push({
+                                url
+                            });
+                            routes.push({
+                                route: url,
+                                payload: { 
+                                    article,
+                                    listGenerate,
+                                    contentRanking,
+                                    contentEbook,
+                                    contentAds,
+                                    contentPR,
+                                    siteURL,
+                                    apiURL
+                                }
+                            })
+                            // }
+                        }
+                    }
+                };
+
+                //Push all generate dynamic route in to log page at the end of topics loop
                 if (index == topics.length) {
                     routes.push({
                         route: '/log',
@@ -537,6 +691,17 @@ export default {
                         }
                     });
                 };
+
+                //Generate homepage
+                routes.push({
+                    route: '/',
+                    payload: {
+                        contentRanking,
+                        contentEbook,
+                        contentAds,
+                        contentPR,
+                    }
+                });
             // };
             };
 
@@ -548,7 +713,7 @@ export default {
             //     console.log('hahah');
             // };
 
-            // const response = await axios.get('https://dev-mtown.g.kuroco.app/rcms-api/1/content/list?topics_group_id=1&cnt=10')
+            // const response = await axios.get('https://api.mtown.my/rcms-api/1/content/list?topics_group_id=1&cnt=10')
             // const articles = response.data.list
             // //   console.log(response.data.pageInfo);
             // //   console.log('hihih');

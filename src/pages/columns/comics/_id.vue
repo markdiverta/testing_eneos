@@ -1,5 +1,9 @@
 <template>
-    <section class="l-content_maxWidth-md l-content_padding -xs l-container">
+<section class="container-fluid l-content_maxWidth-lg">
+<section class="row l-page_content-row">
+<section class="col-md-9 col-12" fluid>
+
+    <div class="l-page_content">
         
         <div class="l-breadcum">
             <!--<a href="/"><i aria-hidden="true" class="icon home item mdi mdi-home"></i></a>-->
@@ -41,17 +45,24 @@
             </div>
         </section>
 
-    </section>
+</div>
+
+</section>
+<Sidebar :contentRanking="ranking" :contentEBook="sidebarEbook" :contentAds="sidebarAds" :contentPR="sidebarPR"/>
+</section><!--l-page_content-row-->
+</section><!--container-fluid-->
 </template>
 
 <script>
 import SocialSharing from '~/components/social_sharing.vue';
+import Sidebar from '~/components/sidebar.vue';
 import item from '~/components/topic_detail';
 export default {
     auth: false,
     components: {
         'v-item': item,
-        SocialSharing
+        SocialSharing,
+        Sidebar
     },
     head() {
       return {
@@ -123,6 +134,10 @@ export default {
                 metaOGImg: thumbnail,
                 metaURL: `${payload.siteURL}${route.fullPath}`,
                 apiURL: payload.apiURL,
+                ranking: payload.contentRanking,
+                sidebarEbook: payload.contentEbook,
+                sidebarAds: payload.contentAds,
+                sidebarPR: payload.contentPR
             }
         };
     },
@@ -140,6 +155,10 @@ export default {
                     date: '',
                 }
             ],
+            ranking: [],
+            sidebarEbook: [],
+            sidebarAds: [],
+            sidebarPR: [],
             loading: true,
             topic_id: '',
             topics_group_id: 11,

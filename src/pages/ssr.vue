@@ -1,12 +1,18 @@
 <template>
-    <section class="p-page_blog l-content_maxWidth-lg l-content_padding -xs l-container">
+<section class="p-page_blog l-content_maxWidth-lg l-container">
+<section class="row l-page_content-row">
+<section class="col-md-9 col-12" fluid>
 
+    <div class="l-page_content">
         <h1 class="p-heading">{{ title }}</h1>
         <p>{{ description }}</p>
 
         <SocialSharing/>
+    </div>
 
-    </section>
+</section>
+</section>
+</section>
 </template>
 
 <script>
