@@ -99,7 +99,8 @@ export default {
             }
         },
         goTo(url){
-            this.$router.push({ path: url})
+            // this.$router.push({ path: url})
+            window.location.href = url;
         },
         updateBlog() {
             let url =

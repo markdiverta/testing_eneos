@@ -65,7 +65,8 @@ export default {
     },
     methods: {
         goTo(url){
-            this.$router.push({ path: url})
+            // this.$router.push({ path: url})
+            window.location.href = url;
         },
         mainContent() {
             let url = '/rcms-api/1/content/details/47639';

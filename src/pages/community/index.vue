@@ -139,7 +139,8 @@ export default {
             }
         },
         goTo(url){
-            this.$router.push({ path: url})
+            // this.$router.push({ path: url})
+            window.location.href = url;
         },
         searchFilter() {
             let url = '/rcms-api/1/content/category?topics_group_id=' +

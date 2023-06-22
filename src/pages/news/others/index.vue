@@ -109,7 +109,8 @@ export default {
     },
     methods: {
         goTo(url){
-            this.$router.push(url)
+            // this.$router.push(url)
+            window.location.href = url;
         },
         next(page) {
             this.updateBlog();

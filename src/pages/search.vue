@@ -114,7 +114,8 @@ export default {
             this.updateBlog();
         },
         goTo(url){
-            this.$router.push({ path: url})
+            // this.$router.push({ path: url})
+            window.location.href = url;
         },
         windowOpen(url){
             window.location.href = url;

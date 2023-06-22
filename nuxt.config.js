@@ -489,7 +489,7 @@ export default {
             // });
             
             //Sidebar eBook API
-            const apiEbook = 'https://api.mtown.my/rcms-api/1/content/details/47641';
+            const apiEbook = apiDomain + '/rcms-api/1/content/details/47641';
             const responseEbook = await axios.get(apiEbook);
             const contentEbook = [];
             const itemEbook = responseEbook.data.details;
@@ -502,7 +502,7 @@ export default {
 
 
             //Sidebar Ranking API
-            const apiRanking = 'https://api.mtown.my/rcms-api/1/content/ranking?cnt=5';
+            const apiRanking = apiDomain + '/rcms-api/1/content/ranking?cnt=5';
             const responseRanking = await axios.get(apiRanking);
             const contentRanking = [];
             const topicsCategory = [
@@ -556,7 +556,7 @@ export default {
             };
 
             //Sidebar ADS & PR API
-            const apiSidebarAds = 'https://api.mtown.my/rcms-api/1/content/details/47640';
+            const apiSidebarAds = apiDomain + '/rcms-api/1/content/details/47640';
             const responseAds = await axios.get(apiSidebarAds);
             var contentAds = [];
             var contentPR = [];
@@ -588,16 +588,15 @@ export default {
                 var index = topics.indexOf(topic)+1;
                 var apiUrl;
                 // if (process.env.NODE_ENV === 'development') {
-                //     apiUrl = 'https://api.mtown.my/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=2';
+                //     apiUrl = 'https://dev-mtown.g.kuroco.app/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=2';
                 // } else {
-                //     apiUrl = 'https://api.mtown.my/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=9999999';
+                //     apiUrl = 'https://dev-mtown.g.kuroco.app/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=9999999';
                 // };
-                apiUrl = 'https://api.mtown.my/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=' + generateLimit;
+                apiUrl = apiDomain + '/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=' + generateLimit;
                 var response = await axios.get(apiUrl);
                 var articles = response.data.list;
-
+                
                 // console.log('Execute log');
-                // console.log(apiUrl);
                 // console.log(response.data.pageInfo.totalPageCnt);
 
                 // Normal loop without pagination
@@ -631,7 +630,7 @@ export default {
                             contentAds,
                             contentPR,
                             siteURL,
-                            apiURL
+                            apiDomain
                         }
                     })
                     // }
@@ -641,7 +640,7 @@ export default {
                 let pageNum = response.data.pageInfo.totalPageCnt;
                 if (pageNum >= 2){
                     for (let i = 2; i <= pageNum; i++){
-                        let paginationURL = 'https://api.mtown.my/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=' + generateLimit + '&pageID=' + i;
+                        let paginationURL = apiDomain + '/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=' + generateLimit + '&pageID=' + i;
                         let response = await axios.get(paginationURL);
                         let articles = response.data.list;
                         // console.log(paginationURL);
@@ -674,7 +673,7 @@ export default {
                                     contentAds,
                                     contentPR,
                                     siteURL,
-                                    apiURL
+                                    apiDomain
                                 }
                             })
                             // }

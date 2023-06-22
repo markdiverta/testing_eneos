@@ -138,7 +138,7 @@ export default {
     },
     async asyncData({ app, payload, route }) {
         if (payload) {
-            let thumbnail = payload.article.ext_1 ? payload.article.ext_1 : payload.apiURL + '/files/user/og.jpg';
+            let thumbnail = payload.article.ext_1 ? payload.article.ext_1 : payload.apiDomain + '/files/user/og.jpg';
             let description = payload.article.contents.replace(/<[^>]+>/g, '').replace(/[\r\n]+/g, '');
             if (description.length > 120) {
                 description = description.substring(0, 120) + '...';
@@ -148,7 +148,7 @@ export default {
                 metaDescription: description,
                 metaOGImg: thumbnail,
                 metaURL: `${payload.siteURL}${route.fullPath}`,
-                apiURL: payload.apiURL,
+                apiDomain: payload.apiDomain,
                 ranking: payload.contentRanking,
                 sidebarEbook: payload.contentEbook,
                 sidebarAds: payload.contentAds,
@@ -238,7 +238,8 @@ export default {
     },
     methods: {
         goTo(url){
-            this.$router.push({ path: url})
+            // this.$router.push({ path: url})
+            window.location.href = url;
         },
         nextPrevLink() {
             let url =

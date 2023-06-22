@@ -311,7 +311,8 @@ export default {
             window.open(url, "twitter-tweet-dialog", "width=550,height=420");
         },
         goTo(url){
-            this.$router.push({ path: url})
+            // this.$router.push({ path: url})
+            window.location.href = url;
         },
         nextPrevLink() {
             let url =

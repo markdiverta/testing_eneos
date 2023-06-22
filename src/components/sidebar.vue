@@ -156,7 +156,8 @@ export default {
             // window.location.href = url;
             window.open(url, "_blank");
         } else {
-            this.$router.push({ path: url})
+            // this.$router.push({ path: url})
+            window.location.href = url;
         }
     },
     windowOpen(url){
