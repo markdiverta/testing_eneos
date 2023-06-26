@@ -482,11 +482,6 @@ export default {
                     catID: 15
                 },
             ];
-
-            // routes.push({
-            //     route: '/sample/',
-            //     payload: {}
-            // });
             
             //Sidebar eBook API
             const apiEbook = apiDomain + '/rcms-api/1/content/details/47641';
@@ -581,9 +576,29 @@ export default {
             };
             contentAds = responseAdsRelated;
             contentPR = responseAdstopics;
-            
+
+
+            //Generate News categories landing and setup SSG sidebar
+            const apiNewsCategory = apiDomain + '/rcms-api/1/content/category?topics_group_id=1';
+            const responseNewsCat = await axios.get(apiNewsCategory);
+            var newsCat = responseNewsCat.data.list;
+            for (const topic of newsCat) {
+                if (topic.slug) {
+                    let url = '/news/' + topic.slug + '/';
+                    routes.push({
+                        route: url,
+                        payload: { 
+                            contentRanking,
+                            contentEbook,
+                            contentAds,
+                            contentPR,
+                        }
+                    });
+                }
+            };
+
             //Topics API
-            for (const topic of topics) { 
+            for (const topic of topics) {
             // if (topic.catSlug == '/news/') {
                 var index = topics.indexOf(topic)+1;
                 var apiUrl;
@@ -595,9 +610,17 @@ export default {
                 apiUrl = apiDomain + '/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=' + generateLimit;
                 var response = await axios.get(apiUrl);
                 var articles = response.data.list;
-                
-                // console.log('Execute log');
-                // console.log(response.data.pageInfo.totalPageCnt);
+
+                // Generate list landing page for each Topics group
+                routes.push({
+                    route: topic.catSlug,
+                    payload: { 
+                        contentRanking, //SSG sidebar only
+                        contentEbook,
+                        contentAds,
+                        contentPR,
+                    }
+                });
 
                 // Normal loop without pagination
                 for (const article of articles) {

@@ -83,6 +83,16 @@ export default {
             sidebarPR: [],
         };
     },
+    async asyncData({ app, payload, route }) {
+        if (payload) {
+            return {
+                ranking: payload.contentRanking,
+                sidebarEbook: payload.contentEbook,
+                sidebarAds: payload.contentAds,
+                sidebarPR: payload.contentPR
+            }
+        };
+    },
     // head() {
     //     return {
     //     title: "MTown - マレーシアの週刊情報誌",

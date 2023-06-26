@@ -166,6 +166,7 @@
             & .item {
                 cursor: pointer;
                 transition: all 0.2s ease;
+                margin: 15px 0;
 
                 &:hover {
                     transform: scale(1.08);
