@@ -31,15 +31,7 @@
                     <span class="c-carousel_title">{{slide.title}}</span>
                 </div>
             </template>
-            {{testing}}
         </template>
-
-        <client-only>
-        <div>
-            Client-only content test
-        </div>
-        </client-only>
-
 
         <div class="l-content_padding pt-2 c-blog_list" v-if="articleNews.length > 0">
             <h2 class="c-heading_bg c-heading_h3">新着マレーシアニュース</h2>
@@ -257,8 +249,7 @@ export default {
             ranking: [],
             sidebarEbook: [],
             sidebarAds: [],
-            sidebarPR: [],
-            testing: '',
+            sidebarPR: []
         };
     },
     head() {
@@ -284,8 +275,7 @@ export default {
                 ranking: payload.contentRanking,
                 sidebarEbook: payload.contentEbook,
                 sidebarAds: payload.contentAds,
-                sidebarPR: payload.contentPR,
-                testing: 'Load from SSG'
+                sidebarPR: payload.contentPR
             };
         };
         if (payload && payload.contentPR) {
