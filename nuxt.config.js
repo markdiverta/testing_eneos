@@ -661,7 +661,7 @@ export default {
 
                 //Additional loop for pagination
                 let pageNum = response.data.pageInfo.totalPageCnt;
-                pageNum = 0;
+                //pageNum = 0;
                 if (pageNum >= 2){
                     for (let i = 2; i <= pageNum; i++){
                         let paginationURL = apiDomain + '/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=' + generateLimit + '&pageID=' + i;
