@@ -109,13 +109,13 @@
                     <a href="https://job.mtown.my/" target="_blank">求人・求職情報一覧</a>
                     <div class="c-mainmenu_dropdown-wrap"></div>
                 </li>
-                <li :class="currentPage.includes('/columns/') ? 'activePage' : ''">
-                    <a href="/columns/comics">コラム</a>
+                <li :class="currentPage.includes('/column/') ? 'activePage' : ''">
+                    <a href="/column/comics">コラム</a>
                     <div class="c-mainmenu_dropdown-wrap">
                         <ul class="c-mainmenu_dropdown l-content_maxWidth-lg">
-                            <li :class="currentPage.includes('/comics') ? 'active' : ''"><a href="/columns/comics/">4コマ</a></li>
-                            <li :class="currentPage.includes('/malaysia-profiles') ? 'active' : ''"><a href="/columns/malaysia-profiles/">マレーシア美人ライフ</a></li>
-                            <!-- <li :class="currentPage.includes('/j-league/') ? 'active' : ''"><a href="/columns/j-league/">Jリーグ</a></li> -->
+                            <li :class="currentPage.includes('/comics') ? 'active' : ''"><a href="/column/comics/">4コマ</a></li>
+                            <li :class="currentPage.includes('/malaysia-profiles') ? 'active' : ''"><a href="/column/malaysia-profiles/">マレーシア美人ライフ</a></li>
+                            <!-- <li :class="currentPage.includes('/j-league/') ? 'active' : ''"><a href="/column/j-league/">Jリーグ</a></li> -->
                             
                             <template v-if="menuColumnCategory.length > 0">
                                 <li v-for="(item, index) in menuColumnCategory" :key="index" :class="currentPage.includes('/' + item.slug + '/') ? 'active' : ''">
@@ -244,8 +244,8 @@
                             </v-expansion-panel-header>
                             <v-expansion-panel-content>
                                 <ul class="innermenu">
-                                    <li><a href="/columns/comics/">4コマ</a></li>
-                                    <li><a href="/columns/malaysia-profiles/">マレーシア美人ライフ</a></li>
+                                    <li><a href="/column/comics/">4コマ</a></li>
+                                    <li><a href="/column/malaysia-profiles/">マレーシア美人ライフ</a></li>
 
                                     <template v-if="menuColumnCategory.length > 0">
                                         <li v-for="(item, index) in menuColumnCategory" :key="index">
@@ -674,7 +674,7 @@ export default {
                     for (let key in response.data.list) {
                         let item = response.data.list[key];
                         topics.push({
-                            url: '/backnumbers/' + item.topics_id,
+                            url: '/backnumber/' + item.topics_id,
                             thumb: item.ext_2,
                         });
                     };
@@ -729,8 +729,8 @@ export default {
                         if (item.slug) {
                             topics.push({
                                 slug: item.slug,
-                                url: '/columns/' + item.slug + '/',
-                                // url: '/columns/?cat=' + item.topics_category_id,
+                                url: '/column/' + item.slug + '/',
+                                // url: '/column/?cat=' + item.topics_category_id,
                                 title: item.category_nm,
                             });
                         };

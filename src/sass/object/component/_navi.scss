@@ -64,6 +64,9 @@
                 //     padding-top: 0;
                 // }
             }
+            @at-root .c-mainmenu li.activePage > a {
+                font-weight: bold;
+            }
             &::before {
                 content: "";
                 position: absolute;
@@ -240,6 +243,7 @@
     color: #fff;
     width: calc(100% - 50px);
     padding-left: 0 !important;
+    margin: 0;
 
     @include md {
         display: flex;

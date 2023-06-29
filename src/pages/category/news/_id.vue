@@ -338,11 +338,11 @@ export default {
             // this.$router.push({ path: url})
             window.location.href = url;
         },
-        nextPrevLink() {
+       nextPrevLink() {
             let url =
             '/rcms-api/1/content/list?topics_group_id=' + 
             this.topics_group_id +
-            '&cnt=2' +
+            '&cnt=1' +
             '&central_id=' +
             this.$route.params.id;
     

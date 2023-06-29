@@ -5,15 +5,41 @@
 
     <div class="l-page_content">
 
-        <carousel v-if="carouselContentLoaded" class="c-carousel l-content_padding -xs pb-0" 
-            :autoplay="true" :nav="false" :dots="false" :loop="true" navClass=""
-        >
-            <div v-for="(slide, index) in articleFeature" :key="index" @click="goTo(slide.url)" class="c-carousel_slide" :style="{backgroundImage: 'url(' + slide.thumb + ')' }">
-                <span class="c-carousel_title">{{slide.title}}</span>
-            </div>
-            <template slot="prev"><i aria-hidden="true" class="c-carousel_nav nav-prev v-icon mdi mdi-chevron-left"></i></template>
-            <template slot="next"><i aria-hidden="true" class="c-carousel_nav nav-next v-icon mdi mdi-chevron-right"></i></template>
-        </carousel>
+        <!-- <template v-if="sidebarPR && sidebarPR.length > 0">
+            <carousel class="c-carousel_ssg c-carousel l-content_padding -xs pb-0" 
+                :autoplay="true" :nav="false" :dots="false" :loop="true" navClass=""
+            >
+                <div v-for="(slide, index) in sidebarPR" :key="index" @click="goTo(slide.url)" class="c-carousel_slide" :style="{backgroundImage: 'url(' + slide.thumb + ')' }">
+                    <span class="c-carousel_title">{{slide.title}}</span>
+                </div>
+                <template slot="prev"><i aria-hidden="true" class="c-carousel_nav nav-prev v-icon mdi mdi-chevron-left"></i></template>
+                <template slot="next"><i aria-hidden="true" class="c-carousel_nav nav-next v-icon mdi mdi-chevron-right"></i></template>
+            </carousel>
+        </template> -->
+        <template v-if="articleFeature && articleFeature.length > 0">
+            <carousel v-if="carouselContentLoaded" class="c-carousel l-content_padding -xs pb-0" 
+                :autoplay="true" :nav="false" :dots="false" :loop="true" navClass=""
+            >
+                <div v-for="(slide, index) in articleFeature" :key="index" @click="goTo(slide.url)" class="c-carousel_slide" :style="{backgroundImage: 'url(' + slide.thumb + ')' }">
+                    <span class="c-carousel_title">{{slide.title}}</span>
+                </div>
+                <template slot="prev"><i aria-hidden="true" class="c-carousel_nav nav-prev v-icon mdi mdi-chevron-left"></i></template>
+                <template slot="next"><i aria-hidden="true" class="c-carousel_nav nav-next v-icon mdi mdi-chevron-right"></i></template>
+            </carousel>
+            <template v-if="sidebarPR && sidebarPR.length > 0">
+                <div v-for="(slide, index) in sidebarPR" :key="index" @click="goTo(slide.url)" class="c-carousel_slide" :style="{backgroundImage: 'url(' + slide.thumb + ')' }">
+                    <span class="c-carousel_title">{{slide.title}}</span>
+                </div>
+            </template>
+            {{testing}}
+        </template>
+
+        <client-only>
+        <div>
+            Client-only content test
+        </div>
+        </client-only>
+
 
         <div class="l-content_padding pt-2 c-blog_list" v-if="articleNews.length > 0">
             <h2 class="c-heading_bg c-heading_h3">新着マレーシアニュース</h2>
@@ -232,6 +258,7 @@ export default {
             sidebarEbook: [],
             sidebarAds: [],
             sidebarPR: [],
+            testing: '',
         };
     },
     head() {
@@ -257,8 +284,14 @@ export default {
                 ranking: payload.contentRanking,
                 sidebarEbook: payload.contentEbook,
                 sidebarAds: payload.contentAds,
-                sidebarPR: payload.contentPR
-            }
+                sidebarPR: payload.contentPR,
+                testing: 'Load from SSG'
+            };
+        };
+        if (payload && payload.contentPR) {
+            import('vue-owl-carousel').then((module) => {
+                this.$options.components.Carousel = module.default;
+            });
         };
     },
     components: {
@@ -273,12 +306,17 @@ export default {
         this.listLifes();
         this.listInterview();
 
-        if (process.client) {
-            import('vue-owl-carousel').then((module) => {
-                this.$options.components.Carousel = module.default;
-                this.featureCarousel();
-            });
-        }
+        const SSG_Carousel = document.querySelector('.c-carousel_ssg');
+
+        if (!SSG_Carousel) {
+            console.log('SPA carousel');
+            if (process.client) {
+                import('vue-owl-carousel').then((module) => {
+                    this.$options.components.Carousel = module.default;
+                    this.featureCarousel();
+                });
+            }
+        };
     },
     methods: {
         goTo(url){

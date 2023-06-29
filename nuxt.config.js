@@ -458,7 +458,7 @@ export default {
                     catID: 10
                 },
                 {
-                    catSlug: '/columns/comics/',
+                    catSlug: '/column/comics/',
                     catID: 11
                 },
                 {
@@ -466,19 +466,19 @@ export default {
                     catID: 12
                 },
                 {
-                    catSlug: '/columns/malaysia-profiles/', //マレーシア美人ライフ
+                    catSlug: '/column/malaysia-profiles/', //マレーシア美人ライフ
                     catID: 13
                 },
                 // {
-                //     catSlug: '/columns/j-league/', //j-league
+                //     catSlug: '/column/j-league/', //j-league
                 //     catID: 14
                 // },
                 {
-                    catSlug: '/columns/', //columns
+                    catSlug: '/column/', //columns
                     catID: 14
                 },
                 {
-                    catSlug: '/backnumbers/', //バックナンバー
+                    catSlug: '/backnumber/', //バックナンバー
                     catID: 15
                 },
             ];
@@ -661,6 +661,7 @@ export default {
 
                 //Additional loop for pagination
                 let pageNum = response.data.pageInfo.totalPageCnt;
+                pageNum = 0;
                 if (pageNum >= 2){
                     for (let i = 2; i <= pageNum; i++){
                         let paginationURL = apiDomain + '/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=' + generateLimit + '&pageID=' + i;
@@ -727,7 +728,7 @@ export default {
             // };
             };
 
-            // routes.push('/columns/testing');
+            // routes.push('/column/testing');
 
             // console.log('here');
             // console.log(routes);

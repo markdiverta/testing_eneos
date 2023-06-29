@@ -68,6 +68,7 @@
             & iframe {
                 display: block;
                 margin: 40px auto 0;
+                width: 100%!important;
             }
             & .btnMore {
                 text-align: center;
@@ -124,6 +125,7 @@
                 background-size: cover;
                 min-height: 100px;
                 background-color: $color_greyLight;
+                background-position: center;
 
                 @include sm {
                     display: none;
@@ -151,6 +153,7 @@
             & .item {
                 cursor: pointer;
                 transition: all 0.2s ease;
+                padding-bottom: 15px;
                 &:hover {
                     transform: scale(1.08);
                 }

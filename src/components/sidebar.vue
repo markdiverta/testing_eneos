@@ -7,7 +7,7 @@
             :src="contentEBook[0].thumb"
         >
         <div class="text-center">
-            <a class="c-btn c-btn_md c-btn_main-dark" href="/backnumbers/">バックナンバーはこちら</a>
+            <a class="c-btn c-btn_md c-btn_main-dark" href="/backnumber/">バックナンバーはこちら</a>
         </div>
     </div>
     <div v-else-if="eBookLoaded && sidebarEbook.url" class="l-content_padding -sm pt-0">
@@ -17,7 +17,7 @@
             :src="sidebarEbook.thumb"
         >
         <div class="text-center">
-            <a class="c-btn c-btn_md c-btn_main-dark" href="/backnumbers/">バックナンバーはこちら</a>
+            <a class="c-btn c-btn_md c-btn_main-dark" href="/backnumber/">バックナンバーはこちら</a>
         </div>
     </div>
 

@@ -285,7 +285,9 @@ export default {
             let url =
             '/rcms-api/1/content/list?topics_group_id=' + 
             this.topics_group_id +
-            '&cnt=2' +
+            '&contents_type=' +
+            this.category +
+            '&cnt=1' +
             '&central_id=' +
             this.topic_id;
     

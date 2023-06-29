@@ -11,53 +11,37 @@
             <a href="/" class="item">ホーム</a>
             <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i>
             <a :href="path" class="item">{{ pageName }}</a>
-
-            <template v-if="items.title">
             <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i>
             <span class="item">{{ items.title }}</span>
-            </template>
-
         </div>
+        <section class="p-article_wrap">
+            <h1 class="p-heading mb-3">{{ items.title }}</h1>
+            {{ items.date }} <span class="c-btn c-btn_main c-btn_sm c-btn_disable ml-4">{{ items.category }}</span>
 
-        <section v-if="!items.title && contentChecked">
-
-            <p class="text-center">Content not found</p>
-            
+            <div class="p-article_featureIMG">
+                <img v-if="items.featureIMG" :src="items.featureIMG">
+            </div>
         </section>
-        <section v-else>
-            
-            <section class="p-article_wrap">
-                <div class="p-article_featureIMG">
-                    <img v-if="items.featureIMG" :src="items.featureIMG">
-                </div>
 
-                <h1 class="p-heading mb-3">{{ items.title }}</h1>
-                {{ items.date }} <span class="c-btn c-btn_main c-btn_sm c-btn_disable ml-4">{{ items.category }}</span>
+        <SocialSharing/>
 
-                <div class="p-article_content" v-if="items.content" v-html="items.content"></div>
-            </section>
-
-            <SocialSharing/>
-
-            <section class="p-article_nextprev">
-                <div class="row">
-                    <div class="col-6 text-left item" v-if="link_prev" @click="goTo(link_prev.url)">
-                        <div class="row">
-                            <div class="col-auto p-article_nextprev-arrow"><i aria-hidden="true" class="icon mdi mdi-chevron-left"></i></div>
-                            <div class="col-3 thumb" v-if="link_prev.img" :style="{backgroundImage: 'url(' + link_prev.img + ')' }"></div>
-                            <div class="col"><span class="link">{{ link_prev.title }}</span></div>
-                        </div>
-                    </div>
-                    <div class="col-6 text-right item" v-if="link_next" @click="goTo(link_next.url)">
-                        <div class="row">
-                            <div class="col"><span class="link">{{ link_next.title }}</span></div>
-                            <div class="col-3 thumb" v-if="link_next.img" :style="{backgroundImage: 'url(' + link_next.img + ')' }"></div>
-                            <div class="col-auto p-article_nextprev-arrow"><i aria-hidden="true" class="icon mdi mdi-chevron-right"></i></div>
-                        </div>
+        <section class="p-article_nextprev">
+            <div class="row">
+                <div class="col-6 text-left item" v-if="link_prev" @click="goTo(path + link_prev.id)">
+                    <div class="row">
+                        <div class="col-auto p-article_nextprev-arrow"><i aria-hidden="true" class="icon mdi mdi-chevron-left"></i></div>
+                        <div class="col-3 thumb" v-if="link_prev.img" :style="{backgroundImage: 'url(' + link_prev.img + ')' }"></div>
+                        <div class="col"><span class="link">{{ link_prev.title }}</span></div>
                     </div>
                 </div>
-            </section>
-
+                <div class="col-6 text-right item" v-if="link_next" @click="goTo(path + link_next.id)">
+                    <div class="row">
+                        <div class="col"><span class="link">{{ link_next.title }}</span></div>
+                        <div class="col-3 thumb" v-if="link_next.img" :style="{backgroundImage: 'url(' + link_next.img + ')' }"></div>
+                        <div class="col-auto p-article_nextprev-arrow"><i aria-hidden="true" class="icon mdi mdi-chevron-right"></i></div>
+                    </div>
+                </div>
+            </div>
         </section>
 
 </div>
@@ -83,20 +67,10 @@ export default {
       return {
         title: this.metaTitle,
         meta: [
-             {
+            {
                 hid: 'og:title',
                 property: 'og:title',
                 content: this.metaTitle
-            },
-            {
-                hid: 'og:url',
-                property: 'og:url',
-                content: this.metaURL,
-            },
-            {
-                hid: 'og:description',
-                property: 'og:description',
-                content: this.metaDescription
             },
             {
                 hid: 'og:image',
@@ -124,11 +98,6 @@ export default {
                 content: this.metaTitle
             },
             {
-                hid: 'twitter:description',
-                name: 'twitter:description',
-                content: this.metaDescription
-            },
-            {
                 hid: 'twitter:image',
                 name: 'twitter:image',
                 content: this.metaOGImg
@@ -139,16 +108,9 @@ export default {
     async asyncData({ app, payload, route }) {
         if (payload) {
             let thumbnail = payload.article.ext_1 ? payload.article.ext_1 : payload.apiDomain + '/files/user/og.jpg';
-            let description = payload.article.contents.replace(/<[^>]+>/g, '').replace(/[\r\n]+/g, '');
-            if (description.length > 120) {
-                description = description.substring(0, 120) + '...';
-            };
             return {
                 metaTitle: payload.article.subject,
-                metaDescription: description,
                 metaOGImg: thumbnail,
-                metaURL: `${payload.siteURL}${route.fullPath}`,
-                apiDomain: payload.apiDomain,
                 ranking: payload.contentRanking,
                 sidebarEbook: payload.contentEbook,
                 sidebarAds: payload.contentAds,
@@ -159,7 +121,7 @@ export default {
     data() {
         return {
             url: '',
-            path: '/eat/',
+            path: '/column/malaysia-profiles/',
             imageUrl: "",
             description: "",
             pageName: '',
@@ -175,31 +137,19 @@ export default {
             sidebarAds: [],
             sidebarPR: [],
             loading: true,
-            topic_slug: '',
             topic_id: '',
-            topics_group_id: 7,
+            topics_group_id: 13,
             link_next: '',
             link_prev: '',
-            contentChecked: false,
-            ranking: [],
-            sidebarEbook: [],
-            sidebarAds: [],
-            sidebarPR: [],
         };
     },
     mounted() {
-        //GA tracking dimension
-        const slug = this.$route.params.id;
-        this.$gtag('event', 'page_view', {
-            'dimension1': slug
-        });
-
         this.url = window.location.href;
-        this.topic_slug = this.$route.params.id;
+        this.topic_id = this.$route.params.id;
         this.loading = true;
         const url =
         '/rcms-api/1/content/details/' +
-        this.topic_slug;
+        this.topic_id;
         const self = this;
         this.$store.$auth.ctx.$axios
             .get(url)
@@ -223,33 +173,29 @@ export default {
                     .replaceAll('-', '.');
 
                 self.pageName = content.group_nm;
-                self.topic_slug = content.slug;
-                self.topic_id = content.topics_id;
+
                 self.items = items;
                 self.loading = false;
-
-                self.nextPrevLink();
             })
             .catch(function (error) {
-                self.contentChecked = true;
                 self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
                 self.$store.dispatch('snackbar/snackOn');
             });
+
+            this.nextPrevLink();
     },
     methods: {
         goTo(url){
             // this.$router.push({ path: url})
             window.location.href = url;
         },
-       nextPrevLink() {
+        nextPrevLink() {
             let url =
             '/rcms-api/1/content/list?topics_group_id=' + 
             this.topics_group_id +
-            '&contents_type=' +
-            this.category +
-            '&cnt=1' +
             '&central_id=' +
-            this.topic_id;
+            this.$route.params.id +
+            '&cnt=1';
     
             const self = this;
             this.$store.$auth.ctx.$axios
@@ -259,25 +205,18 @@ export default {
                     const topics = [];
                     for (const key in response.data.list) {
                         const item = response.data.list[key];
-                        if (item.slug) {
-                            url = self.path + item.slug;
-                        } else {
-                            url = self.path + item.topics_id;
-                        };
-                        if (item.topics_id.toString() !== self.topic_id.toString() && item.slug.toString() !== self.topic_slug.toString()) {
+                        if (item.topics_id.toString() !== self.$route.params.id.toString()) {
                             if (!self.link_next && key == 0) {
                                 let container = {};
                                 container.title = item.subject;
                                 container.id = item.topics_id;
                                 container.img = item.ext_1;
-                                container.url = url;
                                 self.link_next = container;
                             } else {
                                 let container = {};
                                 container.title = item.subject;
                                 container.id = item.topics_id;
                                 container.img = item.ext_1;
-                                container.url = url;
                                 self.link_prev = container;
                             }
                         }
