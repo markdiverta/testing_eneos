@@ -15,12 +15,14 @@
             <span class="item">{{ items.title }}</span>
         </div>
 
+        <client-only>
         <section class="p-article_wrap">
             <h1 class="p-heading mb-3">{{ items.title }}</h1>
             {{ items.date }} <span class="c-btn c-btn_main c-btn_sm c-btn_disable ml-4">{{ items.category }}</span>
 
+            
             <CoolLightBox
-            :items="items.img" 
+            :items="items.img"
             :index="index"
             @close="index = null">
                 <template #icon-previous>
@@ -40,6 +42,7 @@
                 </div>
             </div>
         </section>
+        </client-only>
 
         <SocialSharing/>
 

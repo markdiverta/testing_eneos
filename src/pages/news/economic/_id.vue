@@ -15,7 +15,7 @@
             <span class="item">{{ items.title }}</span>
         </div>
 
-        <section v-if="!items.title && !contentLoaded">
+        <section v-if="!items.title && contentLoaded">
             <p class="text-center">Content not found</p>
         </section>
         <section v-else>
@@ -158,6 +158,7 @@ export default {
                 description = description.substring(0, 120) + '...';
             };
             return {
+                SSGTopics: payload.article,
                 metaTitle: payload.article.subject,
                 metaDescription: description,
                 metaOGImg: thumbnail,
@@ -197,6 +198,7 @@ export default {
             link_prev: '',
             relatedArticles: '',
             contentLoaded: false,
+            SSGTopics: [],
         };
     },
     mounted() {
@@ -209,57 +211,68 @@ export default {
         // }
 
         //Load content API
-        this.url = window.location.href;
-        this.topic_slug = this.$route.params.id;
-        this.loading = true;
-        const url =
-        '/rcms-api/1/content/details/' +
-        this.topic_slug;
-        const self = this;
-        this.$store.$auth.ctx.$axios
-            .get(url)
-            .then(function (response) {
-                const items = [];
-                const content = response.data.details;
+        if (this.SSGTopics.topics_id) {
+            this.topicsDetails(this.SSGTopics);
+        } else {
+            this.url = window.location.href;
+            this.topic_slug = this.$route.params.id;
+            this.loading = true;
+            const url =
+            '/rcms-api/1/content/details/' +
+            this.topic_slug;
+            const self = this;
+            this.$store.$auth.ctx.$axios
+                .get(url)
+                .then(function (response) {
+                    const items = [];
+                    const content = response.data.details;
 
-                if (content.ext_1) {
-                    items.featureIMG = content.ext_1;
-                    self.imageUrl = content.ext_1;
-                };
-                if (content.contents) {
-                    items.content = content.contents;
-                     self.description = content.contents;
-                }; 
-
-                self.category = content.contents_type;
-                items.category = content.contents_type_nm;
-                items.categoryUrl = self.path  + content.contents_type_slug;
-                items.title = content.subject;
-                items.date = response.data.details.ymd
-                    .substring(0, 10)
-                    .replaceAll('-', '.');
-
-                self.pageName = content.group_nm;
-                self.topic_slug = content.slug;
-                self.topic_id = content.topics_id;
-                self.items = items;
-                self.loading = false;
-
-                self.nextPrevLink();
-                self.listArticles();
-            })
-            .catch(function (error) {
-                self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                self.$store.dispatch('snackbar/snackOn');
-            });
-            self.contentLoaded = true;
+                    self.topicsDetails(content);
+                })
+                .catch(function (error) {
+                    // self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
+                    // self.$store.dispatch('snackbar/snackOn');
+                    self.contentLoaded = true;
+                });
+        }
     },
     methods: {
         goTo(url){
             // this.$router.push(url)
             window.location.href = url;
         },
-       nextPrevLink() {
+        topicsDetails(content) {
+            const self = this;
+            const items = [];
+
+            if (content.ext_1) {
+                items.featureIMG = content.ext_1;
+                self.imageUrl = content.ext_1;
+            };
+            if (content.contents) {
+                items.content = content.contents;
+                self.description = content.contents;
+            }; 
+
+            self.category = content.contents_type;
+            items.category = content.contents_type_nm;
+            items.categoryUrl = self.path  + content.contents_type_slug;
+            items.title = content.subject;
+            items.date = content.ymd
+                .substring(0, 10)
+                .replaceAll('-', '.');
+
+            self.pageName = content.group_nm;
+            self.topic_slug = content.slug;
+            self.topic_id = content.topics_id;
+            self.items = items;
+            self.loading = false;
+            self.contentLoaded = true;
+
+            self.nextPrevLink();
+            self.listArticles();
+        },
+        nextPrevLink() {
             let url =
             '/rcms-api/1/content/list?topics_group_id=' + 
             this.topics_group_id +

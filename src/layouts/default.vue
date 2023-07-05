@@ -2,8 +2,6 @@
     <v-app class="l-content_wrap">
     <!-- <v-app class="l-content_wrap" :class="pageCheck"> -->
 
-        <link rel="stylesheet" href="~/pages/style.css">
-
         <header>
         <section class="l-header_top">
             <div class="l-content_maxWidth-lg">
@@ -373,12 +371,6 @@ export default {
             //     defer: true,
             //     nonce: 'Q2mDUmEw'
             // }
-        ],
-        link: [
-            {
-                rel: 'stylesheet',
-                href: '@/style.css'
-            }
         ]
       }
     },

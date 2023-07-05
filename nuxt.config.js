@@ -556,8 +556,19 @@ export default {
             var contentAds = [];
             var contentPR = [];
             const itemAds = responseAds.data.details;
+            const carousel = [];
             const responseAdstopics = [];
             const responseAdsRelated = [];
+
+            for (let key in itemAds.ext_1) {
+                const item = itemAds.ext_1[key];
+                let title = item.title;
+                carousel.push({
+                    title: title,
+                    url: item.url,
+                    thumb: itemAds.ext_6[key],
+                });
+            };
             for (let key in itemAds.ext_2) {
                 let thumb = itemAds.ext_2[key];
                 responseAdstopics.push({
@@ -627,7 +638,6 @@ export default {
                     let slug;
                     let url = topic.catSlug;
                     
-                    // if (article.contents_type_slug == 'nikkei') {
                     if (article.contents_type_slug) { //If categories
                         let encodeSlug = article.contents_type_slug;
                         url += encodeSlug + '/';
@@ -647,7 +657,6 @@ export default {
                         route: url,
                         payload: { 
                             article,
-                            listGenerate,
                             contentRanking,
                             contentEbook,
                             contentAds,
@@ -661,7 +670,7 @@ export default {
 
                 //Additional loop for pagination
                 let pageNum = response.data.pageInfo.totalPageCnt;
-                //pageNum = 0;
+                // pageNum = 0;
                 if (pageNum >= 2){
                     for (let i = 2; i <= pageNum; i++){
                         let paginationURL = apiDomain + '/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=' + generateLimit + '&pageID=' + i;
@@ -691,7 +700,6 @@ export default {
                                 route: url,
                                 payload: { 
                                     article,
-                                    listGenerate,
                                     contentRanking,
                                     contentEbook,
                                     contentAds,
@@ -706,19 +714,20 @@ export default {
                 };
 
                 //Push all generate dynamic route in to log page at the end of topics loop
-                if (index == topics.length) {
-                    routes.push({
-                        route: '/log',
-                        payload: {
-                            listGenerate
-                        }
-                    });
-                };
+                // if (index == topics.length) {
+                //     routes.push({
+                //         route: '/log',
+                //         payload: {
+                //             listGenerate
+                //         }
+                //     });
+                // };
 
                 //Generate homepage
                 routes.push({
                     route: '/',
                     payload: {
+                        carousel,
                         contentRanking,
                         contentEbook,
                         contentAds,
