@@ -15,54 +15,64 @@
             <span class="item">{{ items.title }}</span>
         </div>
 
-        <client-only>
-        <section class="p-article_wrap">
-            <h1 class="p-heading mb-3">{{ items.title }}</h1>
-            {{ items.date }} <span class="c-btn c-btn_main c-btn_sm c-btn_disable ml-4">{{ items.category }}</span>
+        <section v-if="!items.title && contentChecked">
 
+            <p class="text-center">Content not found</p>
             
-            <CoolLightBox
-            :items="items.img"
-            :index="index"
-            @close="index = null">
-                <template #icon-previous>
-                    <i class="fas fa-chevron-left"></i>
-                </template>
-                <template #icon-next>
-                    <i class="fas fa-chevron-right"></i>
-                </template>
-            </CoolLightBox>
-            <div class="row p-article_imgList l-content_padding">
-                <div v-for="(image, imageIndex) in items.img" :key="imageIndex" class="col-md-4 col-sm-6 col-12">
-                <img
-                    class="image"
-                    @click="index = imageIndex"
-                    :src="image"
-                >
-                </div>
-            </div>
         </section>
-        </client-only>
+        <section v-else>
 
-        <SocialSharing/>
+            <client-only>
+            <section class="p-article_wrap">
+                <h1 class="p-heading mb-3">{{ items.title }}</h1>
+                {{ items.date }} <span class="c-btn c-btn_main c-btn_sm c-btn_disable ml-4">{{ items.category }}</span>
 
-        <section class="p-article_nextprev">
-            <div class="row">
-                <div class="col-6 text-left item" v-if="link_prev" @click="goTo(path + link_prev.id)">
-                    <div class="row">
-                        <div class="col-auto p-article_nextprev-arrow"><i aria-hidden="true" class="icon mdi mdi-chevron-left"></i></div>
-                        <div class="col-3 thumb" v-if="link_prev.img" :style="{backgroundImage: 'url(' + link_prev.img + ')' }"></div>
-                        <div class="col"><span class="link">{{ link_prev.title }}</span></div>
+                
+                <CoolLightBox
+                class="c-lightbox"
+                :items="items.img"
+                :index="index"
+                @close="index = null">
+                    <template #icon-previous>
+                        <i aria-hidden="true" class="arrow --prev mdi mdi-chevron-left"></i>
+                    </template>
+                    <template #icon-next>
+                        <i aria-hidden="true" class="arrow --next mdi mdi-chevron-right"></i>
+                    </template>
+                </CoolLightBox>
+                <div class="row p-article_imgList l-content_padding">
+                    <div v-for="(image, imageIndex) in items.img" :key="imageIndex" class="col-md-4 col-sm-6 col-12">
+                    <img
+                        class="image"
+                        @click="index = imageIndex"
+                        :src="image"
+                    >
                     </div>
                 </div>
-                <div class="col-6 text-right item" v-if="link_next" @click="goTo(path + link_next.id)">
-                    <div class="row">
-                        <div class="col"><span class="link">{{ link_next.title }}</span></div>
-                        <div class="col-3 thumb" v-if="link_next.img" :style="{backgroundImage: 'url(' + link_next.img + ')' }"></div>
-                        <div class="col-auto p-article_nextprev-arrow"><i aria-hidden="true" class="icon mdi mdi-chevron-right"></i></div>
+            </section>
+            </client-only>
+
+            <SocialSharing/>
+
+            <section class="p-article_nextprev">
+                <div class="row">
+                    <div class="col-6 text-left item" v-if="link_prev" @click="goTo(link_prev.url)">
+                        <div class="row">
+                            <div class="col-auto p-article_nextprev-arrow"><i aria-hidden="true" class="icon mdi mdi-chevron-left"></i></div>
+                            <div class="col-3 thumb" v-if="link_prev.img" :style="{backgroundImage: 'url(' + link_prev.img + ')' }"></div>
+                            <div class="col"><span class="link">{{ link_prev.title }}</span></div>
+                        </div>
+                    </div>
+                    <div class="col-6 text-right item" v-if="link_next" @click="goTo(link_next.url)">
+                        <div class="row">
+                            <div class="col"><span class="link">{{ link_next.title }}</span></div>
+                            <div class="col-3 thumb" v-if="link_next.img" :style="{backgroundImage: 'url(' + link_next.img + ')' }"></div>
+                            <div class="col-auto p-article_nextprev-arrow"><i aria-hidden="true" class="icon mdi mdi-chevron-right"></i></div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </section>
+
         </section>
 
 </div>
@@ -118,6 +128,7 @@ export default {
         if (payload) {
             let thumbnail = payload.article.ext_1 ? payload.article.ext_1 : payload.apiDomain + '/files/user/og.jpg';
             return {
+                SSGTopics: payload.article,
                 metaTitle: payload.article.subject,
                 metaOGImg: thumbnail,
                 ranking: payload.contentRanking,
@@ -129,6 +140,7 @@ export default {
     },
     data() {
         return {
+            index: null,
             url: '',
             path: '/backnumber/',
             imageUrl: "",
@@ -146,57 +158,70 @@ export default {
             sidebarAds: [],
             sidebarPR: [],
             loading: true,
+            category: '',
+            topic_slug: '',
             topic_id: '',
             topics_group_id: 15,
             link_next: '',
             link_prev: '',
-            photos: [
-                'https://dev-mtown.g.kuroco-img.app/v=1677896033/files/user/images/2023/02/Mtown376_1.jpg',
-                'https://dev-mtown.g.kuroco-img.app/v=1677896033/files/user/images/2023/02/Mtown376_2.jpg',
-            ],
-            index: null
+            contentChecked: false,
+            SSGTopics: [],
         };
     },
     mounted() {
-        this.url = window.location.href;
-        this.topic_id = this.$route.params.id;
-        this.loading = true;
-        const url =
-        '/rcms-api/1/content/details/' +
-        this.topic_id;
-        const self = this;
-        this.$store.$auth.ctx.$axios
-            .get(url)
-            .then(function (response) {
-                const items = [];
-                const content = response.data.details;
+        if (this.SSGTopics.topics_id) {
+            this.topicsDetails(this.SSGTopics);
+        } else {
+            this.url = window.location.href;
+            this.topic_slug = this.$route.params.id;
+            this.loading = true;
+            const url =
+            '/rcms-api/1/content/details/' +
+            this.topic_slug;
+            const self = this;
+            this.$store.$auth.ctx.$axios
+                .get(url)
+                .then(function (response) {
+                    const items = [];
+                    const content = response.data.details;
 
-                if (content.ext_1) {
-                    items.img = content.ext_1;
-                };
-
-                items.category = content.contents_type_nm;
-                items.title = content.subject;
-                items.date = content.ymd
-                    .substring(0, 10)
-                    .replaceAll('-', '.');
-
-                self.pageName = content.group_nm;
-
-                self.items = items;
-                self.loading = false;
-            })
-            .catch(function (error) {
-                self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                self.$store.dispatch('snackbar/snackOn');
-            });
-
-            this.nextPrevLink();
+                    self.topicsDetails(content);
+                })
+                .catch(function (error) {
+                    // self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
+                    // self.$store.dispatch('snackbar/snackOn');
+                    self.contentChecked = true;
+                });
+        }
     },
     methods: {
         goTo(url){
             // this.$router.push({ path: url})
             window.location.href = url;
+        },
+        topicsDetails(content) {
+            const self = this;
+            const items = [];
+
+            if (content.ext_1) {
+                items.img = content.ext_1;
+            };
+
+            self.category = content.contents_type;
+            items.category = content.contents_type_nm;
+            items.title = content.subject;
+            items.date = content.ymd
+                .substring(0, 10)
+                .replaceAll('-', '.');
+
+            self.pageName = content.group_nm;
+            self.topic_slug = content.slug;
+            self.topic_id = content.topics_id;
+            self.items = items;
+            self.loading = false;
+            self.contentChecked = true;
+
+            self.nextPrevLink();
         },
         nextPrevLink() {
             let url =
@@ -213,19 +238,27 @@ export default {
                     self.totalCnt = response.data.pageInfo.totalCnt;
                     const topics = [];
                     for (const key in response.data.list) {
+                        let url = "";
                         const item = response.data.list[key];
-                        if (item.topics_id.toString() !== self.$route.params.id.toString()) {
+                        if (item.slug) {
+                            url = self.path + item.slug;
+                        } else {
+                            url = self.path + item.topics_id;
+                        };
+                        if (item.topics_id.toString() !== self.topic_id.toString() && item.slug.toString() !== self.topic_slug.toString()) {
                             if (!self.link_next && key == 0) {
                                 let container = {};
                                 container.title = item.subject;
                                 container.id = item.topics_id;
                                 container.img = item.ext_2;
+                                container.url = url;
                                 self.link_next = container;
                             } else {
                                 let container = {};
                                 container.title = item.subject;
                                 container.id = item.topics_id;
                                 container.img = item.ext_2;
+                                container.url = url;
                                 self.link_prev = container;
                             }
                         }

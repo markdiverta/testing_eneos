@@ -210,12 +210,11 @@ export default {
     },
     mounted() {
         //GA tracking dimension
-        // if (process.client) {
-            const slug = this.$route.params.id;
-            this.$gtag('event', 'page_view', {
-                'dimension1': slug
-            })
-        // }
+        const slug = this.$route.params.id;
+        this.$gtag.set({
+            'page_title': 'Page View',
+            'dimension1': slug
+        });
 
         //Load content API
         if (this.SSGTopics.topics_id) {

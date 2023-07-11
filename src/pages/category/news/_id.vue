@@ -15,48 +15,57 @@
             <span class="item">{{ title }}</span>
         </div>
 
-        <section class="p-article_wrap">
-            <div class="p-article_featureIMG">
-                <img v-if="items.featureIMG" :src="items.featureIMG">
-            </div>
+        <section v-if="!items.title && contentChecked">
 
-            <h1 class="p-heading mb-3">{{ title }}</h1>
-            {{ date }} 
-            <!-- <span class="c-btn c-btn_main c-btn_sm c-btn_disable ml-4">{{ label }}</span> -->
-            <a :href="labelUrl"><span class="c-btn c-btn_main c-btn_sm c-btn_disable ml-4">{{ label }}</span></a>
-
-            <div class="p-article_content" v-if="items.content" v-html="items.content"></div>
-
-            <!-- <div class="p-article_share l-content_padding -sm">
-                <a href="#" class="c-btn c-btn_social --icon c-btn_twitter" @click.prevent="tweetOnTwitter">Tweet</a>
-                <a href="#" class="c-btn c-btn_social --icon c-btn_fb" @click.prevent="shareOnFacebook">Share</a>
-                <a href="#" class="c-btn c-btn_social c-btn_hatena" @click.prevent="shareOnHatena">Hatena</a>
-                <a href="#" class="c-btn c-btn_social --icon c-btn_pocket" @click.prevent="saveToPocket">Pocket</a>
-                <a href="#" class="c-btn c-btn_social --icon c-btn_rss" @click.prevent="subscribeToRSS">RSS</a>
-                <a href="#" class="c-btn c-btn_social c-btn_feedly" @click.prevent="subscribeOnFeedly">Feedly</a>
-                <a href="#" class="c-btn c-btn_social --icon c-btn_pinterest" @click.prevent="pinOnPinterest">Pin it</a>
-            </div> -->
+            <p class="text-center">Content not found</p>
+            
         </section>
-        
-        <SocialSharing/>
+        <section v-else>
 
-        <section class="p-article_nextprev">
-            <div class="row">
-                <div class="col-6 text-left item" v-if="link_prev" @click="goTo(path + link_prev.id)">
-                    <div class="row">
-                        <div class="col-auto p-article_nextprev-arrow"><i aria-hidden="true" class="icon mdi mdi-chevron-left"></i></div>
-                        <div class="col-3 thumb" v-if="link_prev.img" :style="{backgroundImage: 'url(' + link_prev.img + ')' }"></div>
-                        <div class="col"><span class="link">{{ link_prev.title }}</span></div>
+            <section class="p-article_wrap">
+                <div class="p-article_featureIMG">
+                    <img v-if="items.featureIMG" :src="items.featureIMG">
+                </div>
+
+                <h1 class="p-heading mb-3">{{ title }}</h1>
+                {{ date }} 
+                <!-- <span class="c-btn c-btn_main c-btn_sm c-btn_disable ml-4">{{ label }}</span> -->
+                <a :href="labelUrl"><span class="c-btn c-btn_main c-btn_sm c-btn_disable ml-4">{{ label }}</span></a>
+
+                <div class="p-article_content" v-if="items.content" v-html="items.content"></div>
+
+                <!-- <div class="p-article_share l-content_padding -sm">
+                    <a href="#" class="c-btn c-btn_social --icon c-btn_twitter" @click.prevent="tweetOnTwitter">Tweet</a>
+                    <a href="#" class="c-btn c-btn_social --icon c-btn_fb" @click.prevent="shareOnFacebook">Share</a>
+                    <a href="#" class="c-btn c-btn_social c-btn_hatena" @click.prevent="shareOnHatena">Hatena</a>
+                    <a href="#" class="c-btn c-btn_social --icon c-btn_pocket" @click.prevent="saveToPocket">Pocket</a>
+                    <a href="#" class="c-btn c-btn_social --icon c-btn_rss" @click.prevent="subscribeToRSS">RSS</a>
+                    <a href="#" class="c-btn c-btn_social c-btn_feedly" @click.prevent="subscribeOnFeedly">Feedly</a>
+                    <a href="#" class="c-btn c-btn_social --icon c-btn_pinterest" @click.prevent="pinOnPinterest">Pin it</a>
+                </div> -->
+            </section>
+            
+            <SocialSharing/>
+
+            <section class="p-article_nextprev">
+                <div class="row">
+                    <div class="col-6 text-left item" v-if="link_prev" @click="goTo(link_prev.url)">
+                        <div class="row">
+                            <div class="col-auto p-article_nextprev-arrow"><i aria-hidden="true" class="icon mdi mdi-chevron-left"></i></div>
+                            <div class="col-3 thumb" v-if="link_prev.img" :style="{backgroundImage: 'url(' + link_prev.img + ')' }"></div>
+                            <div class="col"><span class="link">{{ link_prev.title }}</span></div>
+                        </div>
+                    </div>
+                    <div class="col-6 text-right item" v-if="link_next" @click="goTo(link_next.url)">
+                        <div class="row">
+                            <div class="col"><span class="link">{{ link_next.title }}</span></div>
+                            <div class="col-3 thumb" v-if="link_next.img" :style="{backgroundImage: 'url(' + link_next.img + ')' }"></div>
+                            <div class="col-auto p-article_nextprev-arrow"><i aria-hidden="true" class="icon mdi mdi-chevron-right"></i></div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-6 text-right item" v-if="link_next" @click="goTo(path + link_next.id)">
-                    <div class="row">
-                        <div class="col"><span class="link">{{ link_next.title }}</span></div>
-                        <div class="col-3 thumb" v-if="link_next.img" :style="{backgroundImage: 'url(' + link_next.img + ')' }"></div>
-                        <div class="col-auto p-article_nextprev-arrow"><i aria-hidden="true" class="icon mdi mdi-chevron-right"></i></div>
-                    </div>
-                </div>
-            </div>
+            </section>
+
         </section>
 
         <div class="l-content_padding -lg pb-0 c-blog_list" v-if="relatedArticles.length > 0">
@@ -182,6 +191,8 @@ export default {
             sidebarAds: [],
             sidebarPR: [],
             loading: true,
+            category: '',
+            topic_slug: '',
             topic_id: '',
             topics_group_id: 1,
             file_type: '',
@@ -194,7 +205,8 @@ export default {
             link_next: '',
             link_prev: '',
             relatedArticles: '',
-            ogDescription: ''
+            ogDescription: '',
+            contentChecked: false,
         };
     },
     mounted() {
@@ -291,10 +303,12 @@ export default {
 
                 self.items = items;
                 self.loading = false;
+                self.contentChecked = true;
             })
             .catch(function (error) {
                 self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
                 self.$store.dispatch('snackbar/snackOn');
+                self.contentChecked = true;
             });
 
             this.nextPrevLink();
@@ -353,21 +367,29 @@ export default {
                     self.totalCnt = response.data.pageInfo.totalCnt;
                     const topics = [];
                     for (const key in response.data.list) {
+                        let url = "";
                         const item = response.data.list[key];
+                        if (item.slug) {
+                            url = self.path + item.slug;
+                        } else {
+                            url = self.path + item.topics_id;
+                        };
                         // console.log(item.topics_id + ' vs ' + self.$route.params.id);
                         // console.log(item.topics_id.toString() !== self.$route.params.id.toString());
-                        if (item.topics_id.toString() !== self.$route.params.id.toString()) {
+                        if (item.topics_id.toString() !== self.topic_id.toString() && item.slug.toString() !== self.topic_slug.toString()) {
                             if (!self.link_next && key == 0) {
                                 let container = {};
                                 container.title = item.subject;
                                 container.id = item.topics_id;
                                 container.img = item.ext_1;
+                                container.url = url;
                                 self.link_next = container;
                             } else {
                                 let container = {};
                                 container.title = item.subject;
                                 container.id = item.topics_id;
                                 container.img = item.ext_1;
+                                container.url = url;
                                 self.link_prev = container;
                             }
                         }

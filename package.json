@@ -52,6 +52,7 @@
     "vue-cool-lightbox": "^2.7.5",
     "vue-form-generator": "^2.3.4",
     "vue-generator": "^1.1.0",
+    "vue-gtag": "^1.16.1",
     "vue-json-pretty": "^2.0.2",
     "vue-owl-carousel": "^2.0.3",
     "vue-property-decorator": "^9.0.0",

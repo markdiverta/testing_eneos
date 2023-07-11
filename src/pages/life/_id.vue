@@ -15,38 +15,46 @@
             <span class="item">{{ items.title }}</span>
         </div>
         
-        <section class="p-article_wrap">
-            <div class="p-article_featureIMG">
-                <img v-if="items.featureIMG" :src="items.featureIMG">
-            </div>
+        <section v-if="!items.title && contentChecked">
 
-            <h1 class="p-heading mb-3">{{ items.title }}</h1>
-            {{ items.date }} <span class="c-btn c-btn_main c-btn_sm c-btn_disable ml-4">{{ items.category }}</span>
-
-            <div class="p-article_content" v-if="items.content" v-html="items.content"></div>
+            <p class="text-center">Content not found</p>
+            
         </section>
+        <section v-else>
+            
+            <section class="p-article_wrap">
+                <div class="p-article_featureIMG">
+                    <img v-if="items.featureIMG" :src="items.featureIMG">
+                </div>
 
-        <SocialSharing/>
+                <h1 class="p-heading mb-3">{{ items.title }}</h1>
+                {{ items.date }} <span class="c-btn c-btn_main c-btn_sm c-btn_disable ml-4">{{ items.category }}</span>
 
-        <section class="p-article_nextprev">
-            <div class="row">
-                <div class="col-6 text-left item" v-if="link_prev" @click="goTo(link_prev.url)">
-                    <div class="row">
-                        <div class="col-auto p-article_nextprev-arrow"><i aria-hidden="true" class="icon mdi mdi-chevron-left"></i></div>
-                        <div class="col-3 thumb" v-if="link_prev.img" :style="{backgroundImage: 'url(' + link_prev.img + ')' }"></div>
-                        <div class="col"><span class="link">{{ link_prev.title }}</span></div>
+                <div class="p-article_content" v-if="items.content" v-html="items.content"></div>
+            </section>
+
+            <SocialSharing/>
+
+            <section class="p-article_nextprev">
+                <div class="row">
+                    <div class="col-6 text-left item" v-if="link_prev" @click="goTo(link_prev.url)">
+                        <div class="row">
+                            <div class="col-auto p-article_nextprev-arrow"><i aria-hidden="true" class="icon mdi mdi-chevron-left"></i></div>
+                            <div class="col-3 thumb" v-if="link_prev.img" :style="{backgroundImage: 'url(' + link_prev.img + ')' }"></div>
+                            <div class="col"><span class="link">{{ link_prev.title }}</span></div>
+                        </div>
+                    </div>
+                    <div class="col-6 text-right item" v-if="link_next" @click="goTo(link_next.url)">
+                        <div class="row">
+                            <div class="col"><span class="link">{{ link_next.title }}</span></div>
+                            <div class="col-3 thumb" v-if="link_next.img" :style="{backgroundImage: 'url(' + link_next.img + ')' }"></div>
+                            <div class="col-auto p-article_nextprev-arrow"><i aria-hidden="true" class="icon mdi mdi-chevron-right"></i></div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-6 text-right item" v-if="link_next" @click="goTo(link_next.url)">
-                    <div class="row">
-                        <div class="col"><span class="link">{{ link_next.title }}</span></div>
-                        <div class="col-3 thumb" v-if="link_next.img" :style="{backgroundImage: 'url(' + link_next.img + ')' }"></div>
-                        <div class="col-auto p-article_nextprev-arrow"><i aria-hidden="true" class="icon mdi mdi-chevron-right"></i></div>
-                    </div>
-                </div>
-            </div>
-        </section>
+            </section>
 
+        </section>
 </div>
 
 </section>
@@ -131,6 +139,7 @@ export default {
                 description = description.substring(0, 120) + '...';
             };
             return {
+                SSGTopics: payload.article,
                 metaTitle: payload.article.subject,
                 metaDescription: description,
                 metaOGImg: thumbnail,
@@ -162,67 +171,84 @@ export default {
             sidebarAds: [],
             sidebarPR: [],
             loading: true,
+            category: '',
             topic_slug: '',
             topic_id: '',
             topics_group_id: 8,
             link_next: '',
             link_prev: '',
+            contentChecked: false,
+            SSGTopics: [],
         };
     },
     mounted() {
         //GA tracking dimension
         const slug = this.$route.params.id;
-        this.$gtag('event', 'page_view', {
+        this.$gtag.set({
+            'page_title': 'Page View',
             'dimension1': slug
         });
 
-        this.url = window.location.href;
-        this.topic_slug = this.$route.params.id;
-        this.loading = true;
-        const url =
-        '/rcms-api/1/content/details/' +
-        this.topic_slug;
-        const self = this;
-        this.$store.$auth.ctx.$axios
-            .get(url)
-            .then(function (response) {
-                const items = [];
-                const content = response.data.details;
+        if (this.SSGTopics.topics_id) {
+            this.topicsDetails(this.SSGTopics);
+        } else {
+            this.url = window.location.href;
+            this.topic_slug = this.$route.params.id;
+            this.loading = true;
+            const url =
+            '/rcms-api/1/content/details/' +
+            this.topic_slug;
+            const self = this;
+            this.$store.$auth.ctx.$axios
+                .get(url)
+                .then(function (response) {
+                    const items = [];
+                    const content = response.data.details;
 
-                if (content.ext_1) {
-                    items.featureIMG = content.ext_1;
-                    self.imageUrl = content.ext_1;
-                };
-                if (content.contents) {
-                    items.content = content.contents;
-                     self.description = content.contents;
-                }; 
-
-                items.category = content.contents_type_nm;
-                items.title = content.subject;
-                items.date = response.data.details.ymd
-                    .substring(0, 10)
-                    .replaceAll('-', '.');
-
-                self.pageName = content.group_nm;
-                self.topic_slug = content.slug;
-                self.topic_id = content.topics_id;
-                self.items = items;
-                self.loading = false;
-
-                self.nextPrevLink();
-            })
-            .catch(function (error) {
-                self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                self.$store.dispatch('snackbar/snackOn');
-            });
+                    self.topicsDetails(content);
+                })
+                .catch(function (error) {
+                    // self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
+                    // self.$store.dispatch('snackbar/snackOn');
+                    self.contentChecked = true;
+                });
+        }
     },
     methods: {
         goTo(url){
             // this.$router.push({ path: url})
             window.location.href = url;
         },
-       nextPrevLink() {
+        topicsDetails(content) {
+            const self = this;
+            const items = [];
+
+            if (content.ext_1) {
+                items.featureIMG = content.ext_1;
+                self.imageUrl = content.ext_1;
+            };
+            if (content.contents) {
+                items.content = content.contents;
+                    self.description = content.contents;
+            }; 
+
+            self.category = content.contents_type;
+            items.category = content.contents_type_nm;
+            items.title = content.subject;
+            items.date = content.ymd
+                .substring(0, 10)
+                .replaceAll('-', '.');
+
+            self.pageName = content.group_nm;
+            self.topic_slug = content.slug;
+            self.topic_id = content.topics_id;
+            self.items = items;
+            self.loading = false;
+            self.contentChecked = true;
+
+            self.nextPrevLink();
+        },
+        nextPrevLink() {
             let url =
             '/rcms-api/1/content/list?topics_group_id=' + 
             this.topics_group_id +

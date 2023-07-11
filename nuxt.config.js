@@ -90,7 +90,15 @@ export default {
               },      
             { hid: 'robots', name: 'robots', content: envSettings.ROBOTS }
         ],
-        link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.ico' }]
+        link: [
+            // { rel: 'icon', type: 'image/svg+xml', href: '/favicon.ico' },
+            { rel: 'icon', href: '/favicon.png' },
+            { rel: 'icon', type: 'image/svg+xml', href: '/favicon-32x32.png' },
+            { rel: 'icon', type: 'image/svg+xml', href: '/favicon-64x64.png' },
+            { rel: 'icon', type: 'image/svg+xml', href: '/favicon-96x96.png' },
+            { rel: 'apple-touch-icon', type: 'image/svg+xml', href: '/favicon-32x32.png' },
+            { rel: 'apple-touch-icon', sizes: '180x180', href: '/favicon.png' },
+        ]
     },
     /*
    ** Global CSS
@@ -100,7 +108,10 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-    plugins: ['@/plugins/parser'],
+    plugins: [
+        '@/plugins/parser',
+        { src: '@/plugins/vue-gtag', mode: 'client' },
+    ],
     /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -145,15 +156,15 @@ export default {
         '@nuxtjs/auth',
         ['@nuxtjs/pwa', { workbox: false, autoRegister: false, manifest: { publicPath: '/_nuxt/', crossorigin: 'use-credentials' } }],
         'nuxt-i18n',
-        ['@nuxtjs/google-gtag', {
-            id: 'G-50K7BNS543',
-            config: {
-                anonymize_ip: true, // anonymize IP
-                send_page_view: false // might be necessary to avoid duplicated page track on page reload
-            },
-            debug: true, // enable to track in dev mode
-            disableAutoPageTrack: true, // disable if you don't want to track each page route with router.afterEach(...).
-        }],
+        // ['@nuxtjs/google-gtag', {
+        //     id: 'G-50K7BNS543',
+        //     config: {
+        //         anonymize_ip: true, // anonymize IP
+        //         send_page_view: false // might be necessary to avoid duplicated page track on page reload
+        //     },
+        //     debug: true, // enable to track in dev mode
+        //     disableAutoPageTrack: true, // disable if you don't want to track each page route with router.afterEach(...).
+        // }],
     ],
     proxy: {
         '/rcms-api': {

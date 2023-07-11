@@ -144,6 +144,10 @@
     & .v-text-field--outlined > .v-input__control > .v-input__slot {
         min-height: 48px;
     }
+    & .v-text-field--outlined fieldset {
+        border: none;
+        background: #fff;
+    }
 }
 
 .c-block {
@@ -188,6 +192,34 @@
 .c-img {
     &_fluid {
         max-width: 100%;
+    }
+}
+
+.c-lightbox {
+    & .arrow {
+        @include fz(38);
+    }
+    & .cool-lightbox__navigation {
+        max-width: 1600px;
+        position: absolute;
+        margin: 0 auto;
+        height: 100%;
+        width: 100%;
+        left: 0;
+        right: 0;
+        top: 0;
+    }
+    &.cool-lightbox .cool-lightbox-button.cool-lightbox-button--next {
+        right: 30px;
+        @include md {
+            right: 0;
+        }
+    }
+    &.cool-lightbox .cool-lightbox-button.cool-lightbox-button--prev {
+        left: 30px;
+        @include md {
+            left: 0;
+        }
     }
 }
 
