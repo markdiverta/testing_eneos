@@ -134,7 +134,7 @@
         
         <v-main>
             <section class="container-fluid l-content_maxWidth-lg">
-            <section class="row l-page_content-row">
+            <section class="row l-page_content-row" ref="jscontentCheck">
                 <nuxt />
             </section>
             </section>
@@ -426,6 +426,13 @@ export default {
     },
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
+
+        // Check if the main content section return no content then display page not found
+        const sectionElement = this.$refs.jscontentCheck;
+        if (sectionElement.innerHTML.trim() === '' || sectionElement.innerHTML == '\x3C!---->' || sectionElement.innerHTML == '<!---->') {
+            // Section has no content
+            sectionElement.innerHTML = '<h3 class="text-center py-6 my-5">404 Page not found</h3>';
+        };
 
         //Check if main menu no dropdown, change it's height
         const activePages = document.querySelectorAll('.activePage');

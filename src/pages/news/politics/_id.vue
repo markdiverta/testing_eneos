@@ -9,10 +9,18 @@
             <!--<a href="/"><i aria-hidden="true" class="icon home item mdi mdi-home"></i></a>-->
             <!-- <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i> -->
             <a href="/" class="item">ホーム</a>
-            <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i>
-            <a :href="path" class="item">{{ pageName }}</a>
-            <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i>
-            <span class="item">{{ items.title }}</span>
+            <template v-if="pageName">
+                <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i>
+                <a :href="path" class="item">{{ pageName }}</a>
+            </template>
+            <template v-if="items.categoryUrl && items.category">
+                <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i>
+                <a :href="items.categoryUrl" class="item">{{ items.category }}</a>
+            </template>
+            <template v-if="items.title">
+                <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i>
+                <span class="item">{{ items.title }}</span>
+            </template>
         </div>
 
         <section v-if="!items.title && contentLoaded">
@@ -27,7 +35,7 @@
 
                 <h1 class="p-heading mb-3">{{ items.title }}</h1>
                 {{ items.date }}
-                <a :href="items.categoryUrl" class="c-btn c-btn_main c-btn_sm ml-4">{{ items.category }}</a>
+                <a v-if="items.categoryUrl && items.category" :href="items.categoryUrl" class="c-btn c-btn_main c-btn_sm ml-4">{{ items.category }}</a>
 
                 <div class="p-article_content" v-if="items.content" v-html="items.content"></div>
             </section>
