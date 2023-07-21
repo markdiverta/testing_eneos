@@ -72,7 +72,7 @@
                 -->
             </div>
             <div class="text-center l-content_padding -sm pb-0">
-                <a href="/category/news/" class="c-btn c-btn_md c-btn_main-dark">ニュースをもっと読む</a>
+                <a href="/news/" class="c-btn c-btn_md c-btn_main-dark">ニュースをもっと読む</a>
             </div>
         </div>
 

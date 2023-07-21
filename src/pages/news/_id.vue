@@ -171,6 +171,7 @@ export default {
                 metaDescription: description,
                 metaOGImg: thumbnail,
                 metaURL: `${payload.siteURL}${route.fullPath}`,
+                GAslug: route.params.id,
                 apiDomain: payload.apiDomain,
                 ranking: payload.contentRanking,
                 sidebarEbook: payload.contentEbook,
@@ -217,11 +218,13 @@ export default {
             //     'dimension1': slug
             // })
         // }
-        const slug = this.$route.params.id;
-        this.$gtag.set({
-            'page_title': 'Page View',
-            'dimension1': slug
-        });
+        // const slug = this.$route.params.id;
+        // this.$gtag.set({
+        //     'page_title': 'Page View',
+        //     'dimension1': slug
+        // });
+
+        window.addEventListener('load', this.onPageLoad);
 
         //Load content API
         if (this.SSGTopics.topics_id) {
@@ -249,7 +252,19 @@ export default {
                 });
         }
     },
+    beforeDestroy() {
+        // Remove the load event listener to prevent memory leaks
+        window.removeEventListener('load', this.onPageLoad);
+    },
     methods: {
+        onPageLoad() {
+            //GA tracking dimension
+            var slug = this.GAslug ? this.GAslug : this.$route.params.id;
+            this.$gtag.set({
+                'page_title': 'Page View',
+                'dimension1': slug
+            });
+        },
         goTo(url){
             // this.$router.push(url)
             window.location.href = url;

@@ -261,11 +261,17 @@ export default {
                                 desc += '...';
                             };
                         };
+                        if (item.slug) {
+                            url = self.path + item.slug;
+                        } else {
+                            url = self.path + item.topics_id;
+                        };
                         topics.push({
                             date: item.ymd.substring(0, 10).replaceAll('-', '.'),
                             title: item.subject,
                             desc: desc,
                             cat: item.contents_type_nm,
+                            url: url,
                             id: item.topics_id,
                         });
                     }
