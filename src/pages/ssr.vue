@@ -30,6 +30,8 @@ export default {
             pageName: '',
             paginationMax: 15,
             paginationMin: 8,
+            description: '',
+            title: '',
         };
     },
     // async asyncData({ app }) {

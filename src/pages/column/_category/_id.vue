@@ -188,10 +188,9 @@ export default {
     },
     mounted() {
         //GA tracking dimension
-        const slug = this.$route.params.id;
+        var slug = this.GAslug ? this.GAslug : this.$route.params.id;
         this.$gtag.set({
-            'page_title': 'Page View',
-            'dimension1': slug
+            'page_title': 'page_view'
         });
 
         if (this.SSGTopics.topics_id) {

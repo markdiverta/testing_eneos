@@ -110,7 +110,7 @@ export default {
    */
     plugins: [
         '@/plugins/parser',
-        { src: '@/plugins/vue-gtag', mode: 'client' },
+        // { src: '@/plugins/vue-gtag', mode: 'client'},
     ],
     /*
    ** Auto import components
@@ -156,15 +156,14 @@ export default {
         '@nuxtjs/auth',
         ['@nuxtjs/pwa', { workbox: false, autoRegister: false, manifest: { publicPath: '/_nuxt/', crossorigin: 'use-credentials' } }],
         'nuxt-i18n',
-        // ['@nuxtjs/google-gtag', {
-        //     id: 'G-50K7BNS543',
-        //     config: {
-        //         anonymize_ip: true, // anonymize IP
-        //         send_page_view: false // might be necessary to avoid duplicated page track on page reload
-        //     },
-        //     debug: true, // enable to track in dev mode
-        //     disableAutoPageTrack: true, // disable if you don't want to track each page route with router.afterEach(...).
-        // }],
+        ['@nuxtjs/google-gtag', {
+            id: 'G-50K7BNS543',
+            config: {
+                anonymize_ip: true, // anonymize IP
+                send_page_view: false // might be necessary to avoid duplicated page track on page reload
+            },
+            disableAutoPageTrack: true, // disable if you don't want to track each page route with router.afterEach(...).
+        }],
     ],
     proxy: {
         '/rcms-api': {
@@ -554,6 +553,9 @@ export default {
                     }
                 };
                 url = catSlug + newsSlug + item.slug;
+                if (url.includes('//')) {
+                    url = url.replace(/\/{2,}/g, '/');
+                };
                 contentRanking.push({
                     title: title,
                     url: url,

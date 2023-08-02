@@ -224,8 +224,7 @@ export default {
          //GA tracking dimension
         const slug = this.$route.params.id;
         this.$gtag.set({
-            'page_title': 'Page View',
-            'dimension1': slug
+            'page_title': 'Page View'
         });
 
         this.url = window.location.href;

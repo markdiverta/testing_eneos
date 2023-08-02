@@ -230,6 +230,9 @@ export default {
                         }
                     };
                     url = catSlug + newsSlug + item.slug;
+                    if (url.includes('//')) {
+                        url = url.replace(/\/{2,}/g, '/');
+                    };
                     topics.push({
                         title: title,
                         url: url,

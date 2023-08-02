@@ -224,7 +224,14 @@ export default {
         //     'dimension1': slug
         // });
 
-        window.addEventListener('load', this.onPageLoad);
+        // window.addEventListener('load', this.onPageLoad);
+        if (process.browser) {
+            var slug = this.GAslug ? this.GAslug : this.$route.params.id;
+            this.$gtag('event', 'page_view', {
+                'detail_page_slug': slug
+                
+            })
+        };
 
         //Load content API
         if (this.SSGTopics.topics_id) {
@@ -257,14 +264,14 @@ export default {
         window.removeEventListener('load', this.onPageLoad);
     },
     methods: {
-        onPageLoad() {
-            //GA tracking dimension
-            var slug = this.GAslug ? this.GAslug : this.$route.params.id;
-            this.$gtag.set({
-                'page_title': 'Page View',
-                'dimension1': slug
-            });
-        },
+        // onPageLoad() {
+        //     //GA tracking dimension
+        //     var slug = this.GAslug ? this.GAslug : this.$route.params.id;
+        //     this.$gtag.set({
+        //         'page_title': 'Page View',
+        //         'dimension1': slug
+        //     });
+        // },
         goTo(url){
             // this.$router.push(url)
             window.location.href = url;

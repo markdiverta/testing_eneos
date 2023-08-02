@@ -1,6 +1,6 @@
 <template>
     <section class="l-content_maxWidth-sm l-content_padding text-center">
-        <h1 v-if="error.statusCode === 404">
+        <h1 v-if="error.statusCode && error.statusCode === 404">
             {{ pageNotFound }}
         </h1>
         <h1 v-else>
@@ -29,7 +29,7 @@ export default {
     },
     head() {
         const title =
-      this.error.statusCode === 404 ? this.pageNotFound : this.otherError;
+        this.error.statusCode === 404 ? this.pageNotFound : this.otherError;
         return {
             title
         };
