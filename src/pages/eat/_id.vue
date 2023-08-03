@@ -192,11 +192,13 @@ export default {
     },
     mounted() {
         //GA tracking dimension
-        if (process.client) {
+        if (process.browser) {
+            console.log('GA start');
             var slug = this.GAslug ? this.GAslug : this.$route.params.id;
             this.$gtag('event', 'page_view', {
                 'detail_page_slug': slug
             })
+            console.log('GA end');
         };
         
         if (this.SSGTopics.topics_id) {

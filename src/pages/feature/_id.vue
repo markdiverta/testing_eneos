@@ -184,7 +184,7 @@ export default {
     },
     mounted() {
         //GA tracking dimension
-        if (process.client) {
+        if (process.browser) {
             var slug = this.GAslug ? this.GAslug : this.$route.params.id;
             this.$gtag('event', 'page_view', {
                 'detail_page_slug': slug
