@@ -788,7 +788,7 @@ export default {
         middleware: 'slash-redirect',
     },
     sitemap: {
-        hostname: envSettings.BASE_URL,
+        hostname: 'https://www.mtown.my',
         gzip: true, 
         // routes: testing,
         // // routes: async () => {
