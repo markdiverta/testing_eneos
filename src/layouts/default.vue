@@ -347,6 +347,10 @@ export default {
       return {
         title: 'MTown - マレーシアの週刊情報誌',
         meta: [
+            {
+            name: 'google-site-verification',
+            content: '0-ycnZ6Pxr8X5M24maSClAC4Qvc1V9BSL362PUnL1k4'
+         },
           {
             hid: 'og:title',
             property: 'og:title',
