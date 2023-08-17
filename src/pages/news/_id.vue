@@ -4,6 +4,10 @@
 <section class="col-md-9 col-12" fluid>
 
     <div class="l-page_content">
+
+        <template v-if="response">
+            <h2>PREVIEW CONTENT HERE</h2>
+        </template>
         
         <div class="l-breadcum">
             <!--<a href="/"><i aria-hidden="true" class="icon home item mdi mdi-home"></i></a>-->
@@ -158,7 +162,7 @@ export default {
         ]
       }
     },
-    async asyncData({ app, payload, route }) {
+    async asyncData({ app, payload, route}) {
         if (payload) {
             let thumbnail = payload.article.ext_1 ? payload.article.ext_1 : payload.apiDomain + '/files/user/og.jpg';
             let description = payload.article.contents.replace(/<[^>]+>/g, '').replace(/[\r\n]+/g, '');
@@ -178,10 +182,11 @@ export default {
                 sidebarAds: payload.contentAds,
                 sidebarPR: payload.contentPR
             }
-        };
+        }
     },
     data() {
         return {
+            response: '',
             url: '',
             path: '/news/',
             imageUrl: "",
@@ -233,10 +238,28 @@ export default {
             })
         };
 
-        //Load content API
-        if (this.SSGTopics.topics_id) {
+        //Load content API types
+        const previewToken = this.$route.query.preview_token;
+        if (previewToken) {
+            // Preview content
+            const url = process.env.BASE_URL + '/rcms-api/1/details/preview' + '?preview_token=' + previewToken;
+            const self = this;
+            this.$store.$auth.ctx.$axios
+                .get(url)
+                .then(function (response) {
+                    const items = [];
+                    const content = response.data.details;
+                    self.topicsDetails(content);
+                })
+                .catch(function (error) {
+                    self.contentLoaded = true;
+                });
+        }
+        else if (this.SSGTopics.topics_id) {
+            // SSG content
             this.topicsDetails(this.SSGTopics);
         } else {
+            // SPA content
             this.url = window.location.href;
             this.topic_slug = this.$route.params.id;
             this.loading = true;

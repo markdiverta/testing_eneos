@@ -152,7 +152,7 @@ export default {
         '@nuxtjs/axios',
         '@nuxtjs/proxy',
         '@nuxtjs/meta',
-        // '@nuxtjs/sitemap',
+        '@nuxtjs/sitemap',
         '@nuxtjs/auth',
         ['@nuxtjs/pwa', { workbox: false, autoRegister: false, manifest: { publicPath: '/_nuxt/', crossorigin: 'use-credentials' } }],
         'nuxt-i18n',
@@ -786,5 +786,19 @@ export default {
     router: {
         trailingSlash: true,
         middleware: 'slash-redirect',
+    },
+    sitemap: {
+        hostname: envSettings.BASE_URL,
+        gzip: true, 
+        // routes: testing,
+        // // routes: async () => {
+        // //     console.log('start sitemap');
+        // //     console.log(generateRoute);
+        // //     // console.log(testing);
+        // //   // Generate dynamic routes here based on your project's data
+        // //   return [
+        // //     testing
+        // //   ];
+        // // }
     },
 };
