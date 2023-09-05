@@ -66,6 +66,18 @@
 
 .c-sidebar {
 
+    &_ads {
+        & img {
+            display: block;
+            margin: 0 auto;
+        }
+    }
+    &_ebook {
+        & img{
+            display: block;
+            margin: 0 auto;
+        }
+    }
     &_list {
         & .thumb {
             background-size: cover;

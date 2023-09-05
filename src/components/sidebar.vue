@@ -1,20 +1,20 @@
 <template>
     <section class="col-md-3 col-12 sidebar" fluid> 
-    <div v-if="contentEBook[0] && contentEBook[0].url" class="SSG_eBook l-content_padding -sm pt-0">
+    <div v-if="contentEBook[0] && contentEBook[0].url" class="SSG_eBook l-content_padding -sm pt-0 c-sidebar_ebook">
         <h2 class="c-heading_bg --bg_grey c-heading_h3">最新号eBook</h2>
         <img class="c-img_fluid c-clickable mb-3" 
             @click="windowOpen(contentEBook[0].url)"
-            :src="contentEBook[0].thumb"
+            :src="contentEBook[0].thumb + '?width=300'"
         >
         <div class="text-center">
             <a class="c-btn c-btn_md c-btn_main-dark" href="/backnumber/">バックナンバーはこちら</a>
         </div>
     </div>
-    <div v-else-if="eBookLoaded && sidebarEbook.url" class="l-content_padding -sm pt-0">
+    <div v-else-if="eBookLoaded && sidebarEbook.url" class="l-content_padding -sm pt-0 c-sidebar_ebook">
         <h2 class="c-heading_bg --bg_grey c-heading_h3">最新号eBook</h2>
         <img class="c-img_fluid c-clickable mb-3" 
             @click="windowOpen(sidebarEbook.url)"
-            :src="sidebarEbook.thumb"
+            :src="sidebarEbook.thumb + '?width=300'"
         >
         <div class="text-center">
             <a class="c-btn c-btn_md c-btn_main-dark" href="/backnumber/">バックナンバーはこちら</a>
@@ -25,7 +25,7 @@
         <h2 class="c-heading_bg --bg_grey c-heading_h3">アクセスランキング</h2>
         <div class="container c-sidebar_list">
             <div class="row c-sidebar_list-item c-clickable" v-for="(item, index) in contentRanking" :key="index" @click="windowOpen(item.url)">
-                <div class="col-5 thumb" :style="{backgroundImage: 'url(' + item.thumb + ')' }">
+                <div class="col-5 thumb" :style="{backgroundImage: 'url(' + item.thumb + '?width=206)' }">
                 </div>
                 <div class="col">
                     <h4 class="c-sidebar_list-heading">{{ item.title }}</h4>
@@ -37,7 +37,7 @@
         <h2 class="c-heading_bg --bg_grey c-heading_h3">アクセスランキング</h2>
         <div class="container c-sidebar_list">
             <div class="row c-sidebar_list-item c-clickable" v-for="(item, index) in sidebarRanking" :key="index" @click="windowOpen(item.url)">
-                <div class="col-5 thumb" :style="{backgroundImage: 'url(' + item.thumb + ')' }">
+                <div class="col-5 thumb" :style="{backgroundImage: 'url(' + item.thumb + '?width=206)' }">
                 </div>
                 <div class="col">
                     <h4 class="c-sidebar_list-heading">{{ item.title }}</h4>
@@ -47,20 +47,20 @@
     </div>
 
     <!-- topics_group_id=18 共通 under this ext_02 only 広告（PR)（右側） -->
-    <div v-if="contentPR && contentPR.length > 0" class="SSG_PR l-content_padding -xs">
+    <div v-if="contentPR && contentPR.length > 0" class="SSG_PR l-content_padding -xs c-sidebar_ads">
         <h2 class="c-heading_bg --bg_grey c-heading_h3">広告(PR)</h2>
         <img class="c-img_fluid mb-3 c-clickable" 
             v-for="(item, index) in contentPR" :key="index"
             @click="windowOpen(item.url)"
-            :src="item.thumb"
+            :src="item.thumb + '?width=300'"
         >
     </div>
-    <div v-else-if="sidebarPR && sidebarPR.length > 0" class="l-content_padding -xs">
+    <div v-else-if="sidebarPR && sidebarPR.length > 0" class="l-content_padding -xs c-sidebar_ads">
         <h2 class="c-heading_bg --bg_grey c-heading_h3">広告(PR)</h2>
         <img class="c-img_fluid mb-3 c-clickable" 
             v-for="(item, index) in sidebarPR" :key="index"
             @click="windowOpen(item.url)"
-            :src="item.thumb"
+            :src="item.thumb + '?width=300'"
         >
     </div>
 
@@ -80,20 +80,20 @@
     </div>
     
     <!-- topics_group_id=18 共通 under this ext_04 only 関連メディア（右側） -->
-    <div v-if="contentAds && contentAds.length > 0" class="SSG_Ads l-content_padding -xs">
+    <div v-if="contentAds && contentAds.length > 0" class="SSG_Ads l-content_padding -xs c-sidebar_ads">
         <h2 class="c-heading_bg --bg_grey c-heading_h3">関連メディア</h2>
         <img class="c-img_fluid mb-3 c-clickable" 
             v-for="(item, index) in contentAds" :key="index"
             @click="windowOpen(item.url)"
-            :src="item.thumb"
+            :src="item.thumb + '?width=300'"
         >
     </div>
-    <div v-else-if="sidebarRelated && sidebarRelated.length > 0" class="l-content_padding -xs">
+    <div v-else-if="sidebarRelated && sidebarRelated.length > 0" class="l-content_padding -xs c-sidebar_ads">
         <h2 class="c-heading_bg --bg_grey c-heading_h3">関連メディア</h2>
         <img class="c-img_fluid mb-3 c-clickable" 
             v-for="(item, index) in sidebarRelated" :key="index"
             @click="windowOpen(item.url)"
-            :src="item.thumb"
+            :src="item.thumb + '?width=300'"
         >
     </div>
         
