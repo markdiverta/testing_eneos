@@ -663,7 +663,7 @@ export default {
                         slug = article.slug ? article.slug : article.topics_id
                     };
                     
-                    url += slug;
+                    url += slug + '/';
                     listGenerate.push({
                         url
                     });
@@ -706,7 +706,7 @@ export default {
                             } else {
                                 slug = article.slug ? article.slug : article.topics_id
                             };
-                            url += slug;
+                            url += slug + '/';
                             listGenerate.push({
                                 url
                             });

@@ -4,7 +4,6 @@
 <section class="col-md-9 col-12" fluid>
 
     <div class="l-page_content">
-        
         <div class="l-breadcum">
             <!--<a href="/"><i aria-hidden="true" class="icon home item mdi mdi-home"></i></a>-->
             <!-- <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i> -->
@@ -117,6 +116,11 @@ export default {
                 content: this.metaURL,
             },
             {
+                hid: 'description',
+                name: 'description',
+                content: this.metaDescription
+            },
+            {
                 hid: 'og:description',
                 property: 'og:description',
                 content: this.metaDescription
@@ -219,7 +223,6 @@ export default {
         };
     },
     mounted() {
-
         //GA tracking dimension
         // const slug = this.$route.params.id;
         // this.$gtag.set({

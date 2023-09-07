@@ -116,6 +116,11 @@ export default {
                 content: this.metaURL,
             },
             {
+                hid: 'description',
+                name: 'description',
+                content: this.metaDescription
+            },
+            {
                 hid: 'og:description',
                 property: 'og:description',
                 content: this.metaDescription

@@ -122,6 +122,11 @@ export default {
             name: 'description',
             content: this.ogDescription
             },
+            {
+            hid: 'og:description',
+            property: 'og:description',
+            content: this.ogDescription
+            },
             { hid: 'og:type', property: 'og:type', content: 'article' },
             { hid: 'og:locale', property: 'og:locale',  content: 'ja_JP' },
             { hid: 'robots', name: 'robots', content: 'max-image-preview:large' },

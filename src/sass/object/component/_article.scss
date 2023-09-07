@@ -44,6 +44,7 @@
             background-size: auto 100%;
             background-position: center;
             background-color: $color_greyLight;
+            background-repeat: no-repeat;
             min-height: 170px;
 
             @at-root .c-blog_list.--list_2col .thumb {

@@ -240,33 +240,12 @@ export default {
             isSent: false,
             model: {},
             schema: {},
-            meta: {
-                title: 'MTown - マレーシアの週刊情報誌',
-                description: 'To be a guiding light on the life of journey that is not easily visible'
-            },
             ranking: [],
             sidebarEbook: [],
             sidebarAds: [],
             sidebarPR: [],
             ssgCarousel: [],
         };
-    },
-    head() {
-        return {
-        title: "MTown - マレーシアの週刊情報誌",
-        meta: [
-            {
-            hid: 'og:title',
-            property: 'og:title',
-            content: "MTown - マレーシアの週刊情報誌"
-            },
-            {
-            hid: 'og:description',
-            property: 'og:description',
-            content: 'To be a guiding light on the life of journey that is not easily visible'
-            }
-        ]
-        }
     },
     async asyncData({ app, payload, route }) {
         if (payload) {
@@ -386,7 +365,7 @@ export default {
                             catURL: catURL,
                             id: item.topics_id,
                             url: url,
-                            thumb: item.ext_1,
+                            thumb: item.ext_1 + '?height=200',
                         });
                     }
                     self.articleNews = topics;
@@ -427,7 +406,7 @@ export default {
                             cat: item.contents_type_nm,
                             id: item.topics_id,
                             url: url,
-                            thumb: item.ext_1,
+                            thumb: item.ext_1 + '?height=250',
                         });
                     }
                     self.articleEats = topics;
@@ -468,7 +447,7 @@ export default {
                             cat: item.contents_type_nm,
                             id: item.topics_id,
                             url: url,
-                            thumb: item.ext_1,
+                            thumb: item.ext_1 + '?height=250',
                         });
                     }
                     self.articleLifes = topics;
@@ -506,7 +485,7 @@ export default {
                             desc: desc,
                             cat: item.contents_type_nm,
                             id: item.topics_id,
-                            thumb: thumb,
+                            thumb: thumb + '?height=250',
                         });
                     }
                     self.articleInterview = topics;
