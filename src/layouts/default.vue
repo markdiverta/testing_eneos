@@ -346,22 +346,6 @@ export default {
     head() {
       return {
         title: 'MTown - マレーシアの週刊情報誌',
-        meta: [
-            {
-            name: 'google-site-verification',
-            content: '0-ycnZ6Pxr8X5M24maSClAC4Qvc1V9BSL362PUnL1k4'
-         },
-          {
-            hid: 'og:title',
-            property: 'og:title',
-            content: 'MTown - マレーシアの週刊情報誌'
-          },
-          {
-            hid: 'description',
-            name: 'description',
-            content: 'To be a guiding light on the life of journey that is not easily visible'
-          }
-        ],
         script: [
             {
                 src: "https://platform.twitter.com/widgets.js",
