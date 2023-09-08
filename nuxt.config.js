@@ -652,7 +652,7 @@ export default {
                     let slug;
                     let url = topic.catSlug;
                     
-                    if (article.contents_type_slug) { //If categories
+                    if (article.contents_type_slug && article.contents_type_parent_nm) { //If categories & has parent
                         let encodeSlug = article.contents_type_slug;
                         url += encodeSlug + '/';
                     };
@@ -697,7 +697,7 @@ export default {
                             let slug;
                             let url = topic.catSlug;
                             
-                            if (article.contents_type_slug) { //If categories
+                            if (article.contents_type_slug && article.contents_type_parent_nm) { //If categories & has parent
                                 let encodeSlug = article.contents_type_slug;
                                 url += encodeSlug + '/';
                             };
