@@ -608,7 +608,7 @@ export default {
             const responseNewsCat = await axios.get(apiNewsCategory);
             var newsCat = responseNewsCat.data.list;
             for (const topic of newsCat) {
-                if (topic.slug) {
+                if (topic.slug && topic.child_level == 2) {
                     let url = '/news/' + topic.slug + '/';
                     routes.push({
                         route: url,
