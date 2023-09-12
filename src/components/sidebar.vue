@@ -146,9 +146,14 @@ export default {
     if (!SSG_Ranking) {
         this.SPARanking();
     };
+    console.log('Siderbar console access');
+    console.log(SSG_Ads);
     if (!SSG_Ads && !SSG_PR) {
+        console.log('Siderbar SPA ads');
         this.SPAads();
     };
+    console.log('Siderbar console access end');
+    console.log(document.querySelector('.SSG_Ads'));
   },
   methods: {
     goTo(url){
