@@ -583,22 +583,34 @@ export default {
                     thumb: itemAds.ext_6[key],
                 });
             };
-            for (let key in itemAds.ext_2) {
-                let thumb = itemAds.ext_2[key];
+            if (itemAds.ext_2[0]) {
+                for (let key in itemAds.ext_2) {
+                    let thumb = itemAds.ext_2[key];
+                        responseAdstopics.push({
+                            title: itemAds.ext_3[key].title,
+                            url: itemAds.ext_3[key].url,
+                            thumb: thumb,
+                        });
+                };
+            } else {
                 responseAdstopics.push({
-                    title: itemAds.ext_3[key].title,
-                    url: itemAds.ext_3[key].url,
-                    thumb: thumb,
+                    notAvailable: '1',
                 });
             };
-            for (let key in itemAds.ext_4) {
-                let thumb = itemAds.ext_4[key];
+            if (itemAds.ext_4[0]) {
+                for (let key in itemAds.ext_4) {
+                    let thumb = itemAds.ext_4[key];
+                        responseAdsRelated.push({
+                            title: itemAds.ext_5[key].title,
+                            url: itemAds.ext_5[key].url,
+                            thumb: thumb,
+                        });
+                };
+            } else {
                 responseAdsRelated.push({
-                    title: itemAds.ext_5[key].title,
-                    url: itemAds.ext_5[key].url,
-                    thumb: thumb,
+                    notAvailable: '1',
                 });
-            };
+            }; 
             contentAds = responseAdsRelated;
             contentPR = responseAdstopics;
 

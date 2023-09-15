@@ -47,7 +47,7 @@
     </div>
 
     <!-- topics_group_id=18 共通 under this ext_02 only 広告（PR)（右側） -->
-    <div v-if="contentPR && contentPR.length > 0" class="SSG_PR l-content_padding -xs c-sidebar_ads">
+    <div v-if="contentPR && contentPR.length > 0 && !contentPR[0].notAvailable" class="SSG_PR l-content_padding -xs c-sidebar_ads">
         <h2 class="c-heading_bg --bg_grey c-heading_h3">広告(PR)</h2>
         <img class="c-img_fluid mb-3 c-clickable" 
             v-for="(item, index) in contentPR" :key="index"
@@ -80,7 +80,7 @@
     </div>
     
     <!-- topics_group_id=18 共通 under this ext_04 only 関連メディア（右側） -->
-    <div v-if="contentAds && contentAds.length > 0" class="SSG_Ads l-content_padding -xs c-sidebar_ads">
+    <div v-if="contentAds && contentAds.length > 0 && !contentAds[0].notAvailable" class="SSG_Ads l-content_padding -xs c-sidebar_ads">
         <h2 class="c-heading_bg --bg_grey c-heading_h3">関連メディア</h2>
         <img class="c-img_fluid mb-3 c-clickable" 
             v-for="(item, index) in contentAds" :key="index"
@@ -131,7 +131,7 @@ export default {
             sidebarEbook: [],
             eBookLoaded: false,
             sidebarPR: '',
-            sidebarRelated: '',
+            sidebarRelated: ''
         }
   },
   mounted() {
@@ -146,14 +146,12 @@ export default {
     if (!SSG_Ranking) {
         this.SPARanking();
     };
-    console.log('Siderbar console access');
-    console.log(SSG_Ads);
-    if (!SSG_Ads && !SSG_PR) {
-        console.log('Siderbar SPA ads');
+    if (!SSG_PR && !this.contentPR[0].notAvailable) {
         this.SPAads();
     };
-    console.log('Siderbar console access end');
-    console.log(document.querySelector('.SSG_Ads'));
+    if (!SSG_Ads && !this.contentAds[0].notAvailable) {
+        this.SPAads();
+    };
   },
   methods: {
     goTo(url){
