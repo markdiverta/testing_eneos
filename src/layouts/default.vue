@@ -357,7 +357,7 @@ export default {
         meta: [
             {
             name: 'google-site-verification',
-            content: '0-ycnZ6Pxr8X5M24maSClAC4Qvc1V9BSL362PUnL1k4'
+            content: 'v_uOGnyOdP7FGLwK_TQfn1emRKbhXij5OudQqn2IF9Q'
             }
         ],
         script: [
