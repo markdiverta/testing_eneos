@@ -275,9 +275,6 @@ export default {
         this.listLifes();
         this.listInterview();
 
-        console.log('index access');
-        console.log(this.ssgCarousel);
-
         if (process.client) {
             import('vue-owl-carousel').then((module) => {
                 this.$options.components.Carousel = module.default;

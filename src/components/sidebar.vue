@@ -1,10 +1,12 @@
 <template>
-    <section class="col-md-3 col-12 sidebar" fluid> 
+    <section class="col-md-3 col-12 l-sidebar" fluid> 
     <div v-if="contentEBook[0] && contentEBook[0].url" class="SSG_eBook l-content_padding -sm pt-0 c-sidebar_ebook">
         <h2 class="c-heading_bg --bg_grey c-heading_h3">最新号eBook</h2>
         <img class="c-img_fluid c-clickable mb-3" 
             @click="windowOpen(contentEBook[0].url)"
             :src="contentEBook[0].thumb + '?width=300'"
+            width="300"
+            height="437"
         >
         <div class="text-center">
             <a class="c-btn c-btn_md c-btn_main-dark" href="/backnumber/">バックナンバーはこちら</a>
@@ -15,6 +17,8 @@
         <img class="c-img_fluid c-clickable mb-3" 
             @click="windowOpen(sidebarEbook.url)"
             :src="sidebarEbook.thumb + '?width=300'"
+            width="300"
+            height="437"
         >
         <div class="text-center">
             <a class="c-btn c-btn_md c-btn_main-dark" href="/backnumber/">バックナンバーはこちら</a>
@@ -53,6 +57,8 @@
             v-for="(item, index) in contentPR" :key="index"
             @click="windowOpen(item.url)"
             :src="item.thumb + '?width=300'"
+            width="300"
+            height="129"
         >
     </div>
     <div v-else-if="sidebarPR && sidebarPR.length > 0" class="l-content_padding -xs c-sidebar_ads">
@@ -61,6 +67,8 @@
             v-for="(item, index) in sidebarPR" :key="index"
             @click="windowOpen(item.url)"
             :src="item.thumb + '?width=300'"
+            width="300"
+            height="129"
         >
     </div>
 
@@ -86,6 +94,8 @@
             v-for="(item, index) in contentAds" :key="index"
             @click="windowOpen(item.url)"
             :src="item.thumb + '?width=300'"
+            width="300"
+            height="129"
         >
     </div>
     <div v-else-if="sidebarRelated && sidebarRelated.length > 0" class="l-content_padding -xs c-sidebar_ads">
@@ -94,6 +104,8 @@
             v-for="(item, index) in sidebarRelated" :key="index"
             @click="windowOpen(item.url)"
             :src="item.thumb + '?width=300'"
+            width="300"
+            height="129"
         >
     </div>
         
@@ -146,13 +158,17 @@ export default {
     if (!SSG_Ranking) {
         this.SPARanking();
     };
-    if (!SSG_PR && !this.contentPR[0].notAvailable) {
-        this.SPAads();
+    if (!SSG_PR) {
+        if (this.contentPR[0] && !this.contentPR[0].notAvailable) {
+            this.SPAads();
+        };
     };
-    if (!SSG_Ads && !this.contentAds[0].notAvailable) {
-        this.SPAads();
-    };
-  },
+    if (!SSG_Ads) {
+        if (this.contentAds[0] && !this.contentAds[0].notAvailable) {
+            this.SPAads();
+        };
+    }; 
+  }, 
   methods: {
     goTo(url){
         if (url.includes('http')) {

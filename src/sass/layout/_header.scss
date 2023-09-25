@@ -32,6 +32,8 @@
         }
     }
     &_logo {
+        height: auto;
+        
         @include md {
             max-width: 200px;
         }

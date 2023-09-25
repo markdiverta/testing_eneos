@@ -150,7 +150,11 @@
 }
 
 .l-sidebar {
-    margin-top: 10px;
+
+    & img {
+        max-width: 100%;
+        height: auto;
+    }
 
     &_fb {
         max-width: 340px;

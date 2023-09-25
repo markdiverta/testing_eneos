@@ -8,14 +8,14 @@
             <div class="row">
                 <div class="col-sm-6 col-12 d-sm-block d-none">
                     <a href="/" title="MTown"> 
-                        <img src="~/assets/images/logo.png" alt="MTown - マレーシアの週刊情報誌 Logo" class="l-header_logo">
+                        <img src="~/assets/images/logo.png" alt="MTown - マレーシアの週刊情報誌 Logo" class="l-header_logo" width="279" height="100">
                     </a>
                 </div>
                 <div class="col l-header_top-right">
                 <div class="row">
-                    <div class="col-5 d-sm-none d-block  py-0">
+                    <div class="col-5 d-sm-none d-block py-0">
                         <a href="/" title="MTown"> 
-                            <img src="~/assets/images/logo.png" alt="MTown - マレーシアの週刊情報誌 Logo" class="l-header_logo">
+                            <img src="~/assets/images/logo.png" alt="MTown - マレーシアの週刊情報誌 Logo" class="l-header_logo" width="160" height="57">
                         </a>
                     </div>
                     <div class="col pb-0">
@@ -115,11 +115,15 @@
                             <li :class="currentPage.includes('/malaysia-profiles') ? 'active' : ''"><a href="/column/malaysia-profiles/">マレーシア美人ライフ</a></li>
                             <!-- <li :class="currentPage.includes('/j-league/') ? 'active' : ''"><a href="/column/j-league/">Jリーグ</a></li> -->
                             
-                            <template v-if="menuColumnCategory.length > 0">
+                            <!-- <template v-if="menuColumnCategory.length > 0">
                                 <li v-for="(item, index) in menuColumnCategory" :key="index" :class="currentPage.includes('/' + item.slug + '/') ? 'active' : ''">
                                     <a :href="item.url">{{ item.title }}</a>
                                 </li>
-                            </template>
+                            </template> -->
+
+                            <!-- Change from above dynamic menu to static, update below and at mobile menu around line 260 -->
+                            <li :class="currentPage.includes('/j-league') ? 'active' : ''"><a href="/column/j-league/">Jリーグ</a></li>
+                            <li :class="currentPage.includes('/malaysia-calendar') ? 'active' : ''"><a href="/column/malaysia-calendar/">マレーシアの暦</a></li>
                         </ul>
                     </div>
                 </li>
@@ -245,11 +249,15 @@
                                     <li><a href="/column/comics/">4コマ</a></li>
                                     <li><a href="/column/malaysia-profiles/">マレーシア美人ライフ</a></li>
 
-                                    <template v-if="menuColumnCategory.length > 0">
+                                    <!-- <template v-if="menuColumnCategory.length > 0">
                                         <li v-for="(item, index) in menuColumnCategory" :key="index">
                                             <a :href="item.url">{{ item.title }}</a>
                                         </li>
-                                    </template>
+                                    </template> -->
+
+                                    <!-- Change from above dynamic menu to static, update below and at header menu -->
+                                    <li><a href="/column/j-league/">Jリーグ</a></li>
+                                    <li><a href="/column/malaysia-calendar/">マレーシアの暦</a></li>
                                 </ul>
                             </v-expansion-panel-content>
                         </v-expansion-panel>
@@ -264,9 +272,9 @@
                 <div class="c-menu_footerfloat-social section">    
                     <p class="section_heading">Mtown公式SNSをフォロー</p>
                     <ul>
-                        <li><a href="https://www.facebook.com/weeklymtown/" target="_blank"><img src="~/assets/images/fb.png" width="100%"><noscript><img src="~/assets/images/fb.png" width="100%"/></noscript></a></li>
-                        <li><a href="https://twitter.com/WeeklyMtown" target="_blank"><img src="~/assets/images/tw.png" width="100%" data-src="~/assets/images/tw.png" decoding="async" class=" lazyloaded"><noscript><img src="~/assets/images/tw.png" width="100%" data-eio="l" /></noscript></a></li>
-                        <li><a href="https://www.instagram.com/accounts/login/?next=/weeklymtown/" target="_blank"><img src="~/assets/images/ins.png" width="100%" data-src="~/assets/images/ins.png" decoding="async" class=" lazyloaded"><noscript><img src="~/assets/images/ins.png" width="100%" data-eio="l" /></noscript></a></li>
+                        <li><a href="https://www.facebook.com/weeklymtown/" target="_blank"><img src="~/assets/images/fb.png" width="139" height="79"><noscript><img src="~/assets/images/fb.png"  width="139" height="79"/></noscript></a></li>
+                        <li><a href="https://twitter.com/WeeklyMtown" target="_blank"><img src="~/assets/images/tw.png"  width="139" height="79" data-src="~/assets/images/tw.png" decoding="async" class=" lazyloaded"><noscript><img src="~/assets/images/tw.png"  width="139" height="79" data-eio="l" /></noscript></a></li>
+                        <li><a href="https://www.instagram.com/accounts/login/?next=/weeklymtown/" target="_blank"><img src="~/assets/images/ins.png"  width="139" height="79" data-src="~/assets/images/ins.png" decoding="async" class=" lazyloaded"><noscript><img src="~/assets/images/ins.png"  width="139" height="79" data-eio="l" /></noscript></a></li>
                     </ul>
                 </div>
 
@@ -295,7 +303,7 @@
                 <div class="l-footer_social">
                     <div class="row">
                         <div class="col-md-auto col-12">
-                            <img class="l-footer_logo" src="~/assets/images/logo-transparent.png" alt="MTown - マレーシアの週刊情報誌 Logo">
+                            <img class="l-footer_logo" src="~/assets/images/logo-transparent.png" alt="MTown - マレーシアの週刊情報誌 Logo" width="186" height="56">
                         </div>
                         <div class="col l-footer_social-first">
                             <a class="l-footer_link fb" href="https://www.facebook.com/weeklymtown/" target="_blank">Facebook</a>
@@ -346,6 +354,12 @@ export default {
     head() {
       return {
         title: 'MTown - マレーシアの週刊情報誌',
+        meta: [
+            {
+            name: 'google-site-verification',
+            content: '0-ycnZ6Pxr8X5M24maSClAC4Qvc1V9BSL362PUnL1k4'
+            }
+        ],
         script: [
             {
                 src: "https://platform.twitter.com/widgets.js",
@@ -449,7 +463,9 @@ export default {
         //     this.contentSidebarAds();
         //     this.contentRanking();
         // };
-        this.menuColumnList();
+
+        // Disable use of dynamic menu for saving API call
+        // this.menuColumnList();
     },
     beforeDestroy() {
         window.removeEventListener('scroll', this.handleScroll);
@@ -734,7 +750,7 @@ export default {
                 this.$store.dispatch('snackbar/setMessage', 'ログアウトしました');
                 this.$store.dispatch('snackbar/snackOn');
                 this.$router.push('/');
-                window.location.reload();
+                window.location.reload(); 
             });
         }
     }
