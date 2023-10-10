@@ -24,7 +24,7 @@
             
             <section class="p-article_wrap">
                 <div class="p-article_featureIMG">
-                    <img v-if="items.featureIMG" :src="items.featureIMG">
+                    <img v-if="items.featureIMG" :src="items.featureIMG" width="620" height="413">
                 </div>
 
                 <h1 class="p-heading mb-3">{{ items.title }}</h1>
@@ -143,12 +143,38 @@ export default {
             if (description.length > 120) {
                 description = description.substring(0, 120) + '...';
             };
+            // var SSGTopicsPreRender;
+            // if (payload.article) {
+            //     let items = [];
+            //     let content = payload.article;
+
+            //     if (content.ext_1) {
+            //         items.featureIMG = content.ext_1;
+            //     };
+            //     if (content.contents) {
+            //         items.content = content.contents;
+            //     }; 
+
+            //     items.category = content.contents_type_nm;
+            //     items.categoryUrl = '/life/' + content.contents_type_slug;
+            //     items.title = content.subject;
+            //     items.topic_id = content.topics_id;
+            //     if (content.ymd) {
+            //         items.date = content.ymd.substring(0, 10).replace(/-/g, '.');
+            //     } else {
+            //         items.date = '';
+            //     }
+            //     items.pollContent = content.ext_3;
+            //     SSGTopicsPreRender = items;
+            // };
             return {
                 SSGTopics: payload.article,
+                // items: SSGTopicsPreRender,
                 metaTitle: payload.article.subject,
                 metaDescription: description,
                 metaOGImg: thumbnail,
                 metaURL: `${payload.siteURL}${route.fullPath}`,
+                GAslug: route.params.id,
                 apiDomain: payload.apiDomain,
                 ranking: payload.contentRanking,
                 sidebarEbook: payload.contentEbook,
@@ -184,21 +210,17 @@ export default {
             link_prev: '',
             contentChecked: false,
             SSGTopics: [],
+            poll: []
         };
     },
     mounted() {
         //GA tracking dimension
-        console.log('Mounted accessed');
         if (process.client) {
-            console.log('GA start');
             const slug = this.GAslug ? this.GAslug : this.$route.params.id;
             this.$gtag('event', 'page_view', {
                 'detail_page_slug': slug
             });
-            console.log('GA end');
-            console.log('Slug name: ' + slug);
         };
-        console.log('Finish');
 
         if (this.SSGTopics.topics_id) {
             this.topicsDetails(this.SSGTopics);

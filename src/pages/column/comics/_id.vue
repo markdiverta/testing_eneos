@@ -27,7 +27,7 @@
                 {{ items.date }} <span class="c-btn c-btn_main c-btn_sm c-btn_disable ml-4">{{ items.category }}</span>
 
                 <div class="p-article_featureIMG">
-                    <img v-if="items.featureIMG" :src="items.featureIMG">
+                    <img v-if="items.featureIMG" :src="items.featureIMG" width="620" height="413">
                 </div>
             </section>
             

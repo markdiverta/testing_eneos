@@ -29,12 +29,12 @@
         <section v-else>
 
             <section class="p-article_wrap">
+                
                 <div class="p-article_featureIMG">
-                    <img v-if="items.featureIMG" :src="items.featureIMG">
+                    <img v-if="items.featureIMG" :src="items.featureIMG" width="620" height="413">
                 </div>
-
                 <h1 class="p-heading mb-3">{{ items.title }}</h1>
-                {{ items.date }} 
+                {{ items.date }}
                 <a v-if="items.categoryUrl && items.category" :href="items.categoryUrl" class="c-btn c-btn_main c-btn_sm ml-4">{{ items.category }}</a>
 
                 <div class="p-article_content" v-if="items.content" v-html="items.content"></div>
@@ -170,13 +170,38 @@ export default {
             if (description.length > 120) {
                 description = description.substring(0, 120) + '...';
             };
+            // var SSGTopicsPreRender;
+            // if (payload.article) {
+            //     let items = [];
+            //     let content = payload.article;
+
+            //     if (content.ext_1) {
+            //         items.featureIMG = content.ext_1;
+            //     };
+            //     if (content.contents) {
+            //         items.content = content.contents;
+            //     }; 
+
+            //     items.category = content.contents_type_nm;
+            //     items.categoryUrl = '/news/' + content.contents_type_slug;
+            //     items.title = content.subject;
+            //     items.topic_id = content.topics_id;
+            //     if (content.ymd) {
+            //         items.date = content.ymd.substring(0, 10).replace(/-/g, '.');
+            //     } else {
+            //         items.date = '';
+            //     }
+            //     items.pollContent = content.ext_3;
+            //     SSGTopicsPreRender = items;
+            // };
             return {
-                SSGTopics: payload.article,
+                SSGTopics: payload.article, //To load when in client side
+                // items: SSGTopicsPreRender, //To print on static in server
                 metaTitle: payload.article.subject,
                 metaDescription: description,
                 metaOGImg: thumbnail,
                 metaURL: `${payload.siteURL}${route.fullPath}`,
-                GAslug: route.params.id,
+                GAslug: route.params.id, //Only for news topics for ranking tracking
                 apiDomain: payload.apiDomain,
                 ranking: payload.contentRanking,
                 sidebarEbook: payload.contentEbook,

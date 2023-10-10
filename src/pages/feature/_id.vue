@@ -145,12 +145,38 @@ export default {
             if (description.length > 120) {
                 description = description.substring(0, 120) + '...';
             };
+            // var SSGTopicsPreRender;
+            // if (payload.article) {
+            //     let items = [];
+            //     let content = payload.article;
+
+            //     if (content.ext_1) {
+            //         items.featureIMG = content.ext_1;
+            //     };
+            //     if (content.contents) {
+            //         items.content = content.contents;
+            //     }; 
+
+            //     items.category = content.contents_type_nm;
+            //     items.categoryUrl = '/feature/' + content.contents_type_slug;
+            //     items.title = content.subject;
+            //     items.topic_id = content.topics_id;
+            //     if (content.ymd) {
+            //         items.date = content.ymd.substring(0, 10).replace(/-/g, '.');
+            //     } else {
+            //         items.date = '';
+            //     }
+            //     items.pollContent = content.ext_3;
+            //     SSGTopicsPreRender = items;
+            // };
             return {
                 SSGTopics: payload.article,
+                // items: SSGTopicsPreRender,
                 metaTitle: payload.article.subject,
                 metaDescription: description,
                 metaOGImg: thumbnail,
                 metaURL: `${payload.siteURL}${route.fullPath}`,
+                GAslug: route.params.id,
                 apiDomain: payload.apiDomain,
                 ranking: payload.contentRanking,
                 sidebarEbook: payload.contentEbook,
