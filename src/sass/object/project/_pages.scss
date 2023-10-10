@@ -2,6 +2,7 @@
 
     &-heading {
         margin: 30px 0 40px;
+        min-height: 24px;
     }
 
     &-article {
@@ -102,6 +103,7 @@
             margin-top: 40px;
             padding-top: 15px;
             border-top: 1px solid $color_greyLight2;
+            min-height: 101px;
         }
         &_nextprev {
             margin-top: 40px;

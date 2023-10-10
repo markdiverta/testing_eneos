@@ -24,7 +24,7 @@
         
             <section class="p-article_wrap">
                 <div class="p-article_featureIMG">
-                    <img v-if="items.featureIMG" :src="items.featureIMG"> 
+                    <img v-if="items.featureIMG" :src="items.featureIMG" width="620" height="413">
                 </div>
 
                 <h1 class="p-heading mb-3">{{ items.title }}</h1>
