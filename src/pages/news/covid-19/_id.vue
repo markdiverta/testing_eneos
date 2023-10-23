@@ -23,7 +23,7 @@
             </template>
         </div>
 
-        <section v-if="!items.title && contentLoaded">
+        <section v-if="!items.title && contentChecked">
             <p class="text-center">Content not found</p>
         </section>
         <section v-else>
@@ -38,6 +38,7 @@
                 <a v-if="items.categoryUrl && items.category" :href="items.categoryUrl" class="c-btn c-btn_main c-btn_sm ml-4">{{ items.category }}</a>
 
                 <div class="p-article_content" v-if="items.content" v-html="items.content"></div>
+
             </section>
 
             <SocialSharing/>
@@ -105,7 +106,7 @@ export default {
       return {
         title: this.metaTitle,
         meta: [
-             {
+            {
                 hid: 'og:title',
                 property: 'og:title',
                 content: this.metaTitle
@@ -206,7 +207,7 @@ export default {
                 ranking: payload.contentRanking,
                 sidebarEbook: payload.contentEbook,
                 sidebarAds: payload.contentAds,
-                sidebarPR: payload.contentPR
+                sidebarPR: payload.contentPR,
             }
         };
     },
@@ -222,6 +223,7 @@ export default {
                     title: this.title,
                     category: '',
                     date: '',
+                    id: '',
                 }
             ],
             ranking: [],
@@ -236,8 +238,8 @@ export default {
             link_next: '',
             link_prev: '',
             relatedArticles: '',
-            contentLoaded: false,
-            SSGTopics: [],
+            contentChecked: false,
+            SSGTopics: []
         };
     },
     mounted() {
@@ -247,14 +249,46 @@ export default {
             var slug = this.GAslug ? this.GAslug : this.$route.params.id;
             this.$gtag('event', 'page_view', {
                 'detail_page_slug': slug
-                
             })
-        };
+        }; 
 
         //Load content API
         if (this.SSGTopics.topics_id) {
-            this.topicsDetails(this.SSGTopics);
+            //Check if latest update available on today
+            var storedArray = JSON.parse(sessionStorage.getItem('updateList'));
+            if (storedArray && storedArray.length >= 1) {
+                //If have latest update, load SPA for fresh content
+                for (const key in storedArray) {
+                    if (storedArray[key].id === this.SSGTopics.topics_id) {
+                        this.url = window.location.href;
+                        this.topic_slug = this.$route.params.id;
+                        this.loading = true;
+                        const url =
+                        '/rcms-api/1/content/details/' +
+                        this.topic_slug;
+                        const self = this;
+                        this.$store.$auth.ctx.$axios
+                            .get(url)
+                            .then(function (response) {
+                                const items = [];
+                                const content = response.data.details;
+
+                                self.topicsDetails(content);
+                            })
+                            .catch(function (error) {
+                                self.contentChecked = true;
+                            });
+                        break;
+                    } else {
+                        this.topicsDetails(this.SSGTopics);
+                    }
+                };
+            } else {
+                //If no latest update just display standard SSG
+                this.topicsDetails(this.SSGTopics);
+            };
         } else {
+            //Normal SPA
             this.url = window.location.href;
             this.topic_slug = this.$route.params.id;
             this.loading = true;
@@ -273,7 +307,7 @@ export default {
                 .catch(function (error) {
                     // self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
                     // self.$store.dispatch('snackbar/snackOn');
-                    self.contentLoaded = true;
+                    self.contentChecked = true;
                 });
         }
     },
@@ -311,6 +345,7 @@ export default {
             items.category = content.contents_type_nm;
             items.categoryUrl = self.path  + content.contents_type_slug;
             items.title = content.subject;
+            items.topic_id = content.topics_id;
             items.date = content.ymd
                 .substring(0, 10)
                 .replaceAll('-', '.');
@@ -320,7 +355,7 @@ export default {
             self.topic_id = content.topics_id;
             self.items = items;
             self.loading = false;
-            self.contentLoaded = true;
+            self.contentChecked = true;
 
             self.nextPrevLink();
             self.listArticles();

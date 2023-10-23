@@ -378,6 +378,7 @@ export default {
     },
     data() {
         return {
+            latestUpdateTopics: [],
             showDropdown: false,
             currentYear: null,
             scrollPosition: 0,
@@ -455,7 +456,13 @@ export default {
         } else {
             // Create a Twitter timeline widget
             this.createTwitterTimeline();
-        }
+        };
+
+        // Latest topics check if anny (today update)
+        var storedArray = JSON.parse(sessionStorage.getItem('updateList'));
+        if(!storedArray) { //If haven't checked & localstorage is empty
+            this.latestUpdate();
+        };
         
         // this.contentMagazine();
         // if (!window.location.pathname.includes('/news/politics/')) {
@@ -585,6 +592,39 @@ export default {
                 window.requestAnimationFrame(this.scrollToTop);
                 window.scrollTo(0, c - c / 8);
             }
+        },
+        latestUpdate() {
+            let url = '/rcms-api/1/content/list?order_query=update_ymdhi%3DDESC';
+            const self = this;
+            this.$store.$auth.ctx.$axios
+            .get(url)
+            .then(function (response) {
+                // Get today's date in the same format
+                const today = new Date();
+                const todayFormatted = today.toISOString().split('T')[0];
+                const latestTopics = [];
+
+                for (let key in response.data.list) {
+                    let item = response.data.list[key];
+                    // Assuming updateDate is a Date object
+                    let updateDate = new Date(item.update_ymdhi);
+                    // Extract only the date part (YYYY-MM-DD) from updateDate
+                    let updateDateFormatted = updateDate.toISOString().split('T')[0];
+    
+                    if (updateDateFormatted >= todayFormatted) {
+                        latestTopics.push({
+                            id: item.topics_id,
+                        });
+                    } else {
+                        break;
+                    }
+                };
+                sessionStorage.setItem('updateList', JSON.stringify(latestTopics));
+                window.location.reload(); 
+            })
+            .catch(function (error) {
+                console.log(error.response.data.errors?.[0].message);
+            });
         },
         contentRanking() {
             let url = '/rcms-api/1/content/ranking?cnt=5';

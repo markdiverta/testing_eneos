@@ -36,7 +36,7 @@
                 <div class="p-article_content" v-if="items.content" v-html="items.content"></div>
             </section>
 
-            <SocialSharing/>
+<SocialSharing/>
 
             <section class="p-article_nextprev">
                 <div class="row">
@@ -183,7 +183,7 @@ export default {
                 ranking: payload.contentRanking,
                 sidebarEbook: payload.contentEbook,
                 sidebarAds: payload.contentAds,
-                sidebarPR: payload.contentPR
+                sidebarPR: payload.contentPR,
             }
         };
     },
@@ -217,23 +217,55 @@ export default {
             sidebarEbook: [],
             sidebarAds: [],
             sidebarPR: [],
-            SSGTopics: [],
+            SSGTopics: []
         };
     },
     mounted() {
         //GA tracking dimension
         if (process.browser) {
-            console.log('GA start');
             var slug = this.GAslug ? this.GAslug : this.$route.params.id;
             this.$gtag('event', 'page_view', {
                 'detail_page_slug': slug
             })
-            console.log('GA end');
         };
         
+        //Load content API
         if (this.SSGTopics.topics_id) {
-            this.topicsDetails(this.SSGTopics);
+            //Check if latest update available on today
+            var storedArray = JSON.parse(sessionStorage.getItem('updateList'));
+            if (storedArray && storedArray.length >= 1) {
+                //If have latest update, load SPA for fresh content
+                for (const key in storedArray) {
+                    if (storedArray[key].id === this.SSGTopics.topics_id) {
+                        this.url = window.location.href;
+                        this.topic_slug = this.$route.params.id;
+                        this.loading = true;
+                        const url =
+                        '/rcms-api/1/content/details/' +
+                        this.topic_slug;
+                        const self = this;
+                        this.$store.$auth.ctx.$axios
+                            .get(url)
+                            .then(function (response) {
+                                const items = [];
+                                const content = response.data.details;
+
+                                self.topicsDetails(content);
+                            })
+                            .catch(function (error) {
+                                self.contentChecked = true;
+                            });
+                        break;
+                    } else {
+                        this.topicsDetails(this.SSGTopics);
+                    }
+                };
+            } else {
+                //If no latest update just display standard SSG
+                this.topicsDetails(this.SSGTopics);
+            };
         } else {
+            //Normal SPA
             this.url = window.location.href;
             this.topic_slug = this.$route.params.id;
             this.loading = true;
