@@ -3,7 +3,7 @@
 <section class="row l-page_content-row">
 <section class="col-md-9 col-12" fluid>
 
-    <div class="l-page_content">
+    <div class="l-page_content"> 
         
         <div class="l-breadcum">
             <!--<a href="/"><i aria-hidden="true" class="icon home item mdi mdi-home"></i></a>-->
