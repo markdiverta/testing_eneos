@@ -192,30 +192,34 @@ export default {
             var storedArray = JSON.parse(sessionStorage.getItem('updateList'));
             if (storedArray && storedArray.length >= 1) {
                 //If have latest update, load SPA for fresh content
+                var hasUpdate = false;
                 for (const key in storedArray) {
                     if (storedArray[key].id === this.SSGTopics.topics_id) {
-                        this.url = window.location.href;
-                        this.topic_slug = this.$route.params.id;
-                        this.loading = true;
-                        const url =
-                        '/rcms-api/1/content/details/' +
-                        this.topic_slug;
-                        const self = this;
-                        this.$store.$auth.ctx.$axios
-                            .get(url)
-                            .then(function (response) {
-                                const items = [];
-                                const content = response.data.details;
-
-                                self.topicsDetails(content);
-                            })
-                            .catch(function (error) {
-                                self.contentChecked = true;
-                            });
+                        hasUpdate = true;
                         break;
-                    } else {
-                        this.topicsDetails(this.SSGTopics);
-                    }
+                    };
+                };
+                if (hasUpdate) {
+                    this.url = window.location.href;
+                    this.topic_slug = this.$route.params.id;
+                    this.loading = true;
+                    const url =
+                    '/rcms-api/1/content/details/' +
+                    this.topic_slug;
+                    const self = this;
+                    this.$store.$auth.ctx.$axios
+                        .get(url)
+                        .then(function (response) {
+                            const items = [];
+                            const content = response.data.details;
+
+                            self.topicsDetails(content);
+                        })
+                        .catch(function (error) {
+                            self.contentChecked = true;
+                        });
+                } else {
+                    this.topicsDetails(this.SSGTopics);
                 };
             } else {
                 //If no latest update just display standard SSG
