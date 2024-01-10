@@ -6,6 +6,11 @@ on:
   issue_comment:
     types: [created, edited]
   workflow_dispatch:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    # Trigger workflow at 00:00 JST (offset by -9 hours as cron uses UTC time)
+    # https://crontab.cronhub.io/
+    - cron: "0 15 * * *"
 jobs:
   # for Pull Request (exclude merged)
   pullreq_build:
