@@ -126,28 +126,7 @@ export default {
             optionsPath: '@/vuetify.options.js',
             treeShake: true,
         }]
-        // '@nuxtjs/fontawesome',
-        // ['@nuxtjs/fontawesome', {
-        //     component: 'fas',
-        //     suffix: true,
-        //     icons: {
-        //       solid: ['freeFasAngle-left', 'freeFasBars', 'freeFasChevron-up'],
-        //     }
-        // }],
     ],
-    /*
-    ** Fontawesome
-    */
-    // fontawesome: {
-    //     icons: {
-    //         regular: [],
-    //         solid: true,
-    //         brands: []
-    //     }
-    // },
-    /*
-   ** Nuxt.js modules
-   */
    modules: [
         '@nuxtjs/axios',
         '@nuxtjs/proxy',
@@ -228,93 +207,7 @@ export default {
     },
     router: {
         middleware: ['auth'],
-        // extendRoutes(routes, resolve) {
-        //     routes.push({
-        //         name: 'category',
-        //         path: '/news/:category/:articleId?',
-        //         component: resolve(__dirname, '@/pages/news/_id.vue')
-        //     });
-        //     routes.push({
-        //         name: 'category',
-        //         path: '/news/:category/',
-        //         component: resolve(__dirname, '@/pages/news/index.vue')
-        //     });
-        // },
     },
-    /*
-    // generate: {
-    //     async routes() {
-    //       const categories = ['nikkei', 'politics', 'xxxx']
-    //       const routes = []
-    
-    //       for (const category of categories) {
-    //         const response = await this.$axios.$get(`/rcms-api/1/content/list/?topics_group_id=${category}`)
-    //         const articles = response
-    
-    //         for (const article of articles) {
-    //           routes.push({
-    //             route: `/news/${category}/${article.id}`,
-    //             payload: {
-    //               article
-    //             }
-    //           })
-    //         }
-    //       }
-    
-    //       return routes
-    //     }
-    //   },
-    // generate: {
-    //     async routes() {
-    //       const categories = ['politics', 'covid-19', 'economic', 'nikkei', 'others']
-    //       const routes = []
-          
-    //       for (const category of categories) {
-    //         const { contents } = await this.$axios.$get(`/rcms-api/1/content/list/?topics_group_id=${category}`)
-    //         contents.forEach((article) => {
-    //           routes.push({
-    //             route: `/news/${category}/${article.id}`,
-    //             payload: {
-    //               component: '@/pages/blog/details/content.vue',
-    //               article
-    //             }
-    //           })
-    //         })
-    //       }
-    
-    //       return routes
-    //     }
-    //   },
-    // generate: {
-    //     async routes() {
-    //       const categories = ['politics', 'covid-19', 'economic', 'nikkei', 'others']
-    //       const routes = []
-    //       console.log('hihihi');
-    //       for (const category of categories) {
-    //         routes.push(`/news/${category}`)
-    //       }
-    //       return routes
-    //     }
-    // },
-    // generate: {
-    //     async routes() {
-    //       const routes = []
-    //       const categories = ['nikkei', 'politics', 'xxxx']
-    
-    //       for (const category of categories) {
-    //         console.log(`Generating route for category: ${category}`)
-    //         routes.push({
-    //           route: `/news/${category}/`,
-    //           payload: {
-    //             component: '@/pages/news/index.vue'
-    //           }
-    //         })
-    //       }
-    
-    //       return routes
-    //     }
-    // },
-    */
     axios: {
         baseURL: envSettings.BASE_URL,
         credentials: true
@@ -329,27 +222,6 @@ export default {
             home: '/', // ログイン後のリダイレクトURL(4.9.1ではそのままでは動かない)
             callback: false
         },
-        // strategies: {
-        //     local: {
-        //         endpoints: {
-        //             login: {
-        //                 url: '/rcms-api/1/login',
-        //                 method: 'post'
-        //             },
-        //             // user: {
-        //             //     url: '/rcms-api/1/profile',
-        //             //     method: 'get',
-        //             //     propertyName: false
-        //             // },
-        //             logout: {
-        //                 url: '/rcms-api/1/logout',
-        //                 method: 'post'
-        //             }
-        //         },
-        //         tokenRequired: false,
-        //         // autoFetchUser: false
-        //     }
-        // }
     },
     overrides: [
         {
@@ -357,88 +229,14 @@ export default {
             processor: 'vue/.vue'
         }
     ],
-    /*
-    generate: {
-        // async routes() {
-        //     try {
-        //     console.log('enter');
-        //     let routesPath = [];
-        //     let res = await axios.get('https://api.mtown.my/rcms-api/1/content/details/');
-        //     console.log(res);
-        //     let data = res.data;
-        //     data?.list?.forEach(page => {
-        //         let slug = page.slug.length != 0 ? page.slug : page.subject.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
-        //         routesPath.push('/news/nikkei/' + slug);
-        //     })
-        //     return routesPath;
-        //         } catch(err) {
-        //             console.log(err);
-        //         return [];
-        //     }
-        // }
-        // async routes() {
-        //     const categories = ['politics', 'covid-19', 'economic', 'nikkei', 'others']
-        //     const routes = []
-            
-        //     for (const category of categories) {
-        //         const response = await axios.get(`https://api.mtown.my/rcms-api/1/content/list/?topics_group_id=${category}`);
-        //         const articles = response;
-        //             for (const article of articles) {
-        //                 console.log('1');
-        //                 // routes.push({
-        //                 //     route: `/news/${category}/${article.id}`,
-        //                 //     payload: {
-        //                 //         article
-        //                 //     }
-        //                 // })
-        //             }
-        //     }
-        //     // return routes
-        // }
-        routes: async () => {
-            // const categories = ['politics', 'covid-19', 'economic', 'nikkei', 'others']
-            const routes = []
-            // for (const category of categories) {
-              const response = await axios.get('https://api.mtown.my/rcms-api/1/content/list?topics_group_id=1')
-              const articles = response.data.list
-              for (const article of articles) {
-                // let id = article.topics_id;
-                // routes.push('/news/' + id);
-                console.log(article);
-                routes.push({
-                    // route: `/news/${article.topics_id}`,
-                    // payload: {
-                    //   component: '@/pages/news/_id.vue',
-                    //   article
-                    // }
-                    route: (params) => `/news/${params.topics_id}`,
-                    payload: {
-                        component: '@/pages/news/_id.vue',
-                        article
-                    }
-                })
-              }
-            return routes
-                
-                // let routesPath = [];
-                // let res = await axios.get('https://api.mtown.my/rcms-api/1/content/list?topics_group_id%5B%5D=1');
-                // let data = res.data;
-                // data?.list?.forEach(page => {
-                // let slug = page.slug.length != 0 ? page.slug : page.subject.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
-                //     routesPath.push('/news/' + slug);
-                // })
-                // return routesPath;
-            // }
-        }
-    }
-    */
     generate: {
         routes: async () => {
             const apiDomain = 'https://api.mtown.my';
             const siteURL = 'https://www.mtown.my';
             const routes = [];
             const listGenerate = [];
-            const generateLimit = 999;
+            var testMode = true; //Change to true or false if you want to enable dev mode for quick generate
+            const generateLimit = testMode ? 50 : 999; //Maximum topics per pagination is 999
             const topics = [
                 {
                     catSlug: '/news/',
@@ -448,18 +246,10 @@ export default {
                     catSlug: '/eat/',
                     catID: 7
                 },
-                // {
-                //     catSlug: '/eats/',
-                //     catID: 7
-                // },
                 {
                     catSlug: '/life/',
                     catID: 8
                 },
-                // {
-                //     catSlug: '/lifes/',
-                //     catID: 8
-                // },
                 {
                     catSlug: '/feature/',
                     catID: 9
@@ -480,10 +270,6 @@ export default {
                     catSlug: '/column/malaysia-profiles/', //マレーシア美人ライフ
                     catID: 13
                 },
-                // {
-                //     catSlug: '/column/j-league/', //j-league
-                //     catID: 14
-                // },
                 {
                     catSlug: '/column/', //columns
                     catID: 14
@@ -495,155 +281,164 @@ export default {
             ];
             
             //Sidebar eBook API
-            const apiEbook = apiDomain + '/rcms-api/1/content/details/47641';
-            const responseEbook = await axios.get(apiEbook);
             const contentEbook = [];
-            const itemEbook = responseEbook.data.details;
-            contentEbook.push({
-                url: itemEbook.ext_1,
-                thumb: itemEbook.ext_2
-            });
-            // contentEbook.url = itemEbook.ext_1;
-            // contentEbook.thumb = itemEbook.ext_2;
-
+            const apiEbook = apiDomain + '/rcms-api/1/content/details/47641';
+            try {
+                const responseEbook = await axios.get(apiEbook);
+                const itemEbook = responseEbook.data.details;
+                contentEbook.push({
+                    url: itemEbook.ext_1,
+                    thumb: itemEbook.ext_2
+                });
+            } catch (error) {
+                console.error('API ERROR:', apiEbook + ' - ' + error.message);
+            };
 
             //Sidebar Ranking API
             const apiRanking = apiDomain + '/rcms-api/1/content/ranking?cnt=5';
-            const responseRanking = await axios.get(apiRanking);
             const contentRanking = [];
-            const topicsCategory = [
-                {
-                    catSlug: '/news/',
-                    catID: 1
-                },
-                {
-                    catSlug: '/eat/',
-                    catID: 7
-                },
-                {
-                    catSlug: '/life/',
-                    catID: 8
-                },
-                {
-                    catSlug: '/feature/',
-                    catID: 9
-                },
-                {
-                    catSlug: '/interview/',
-                    catID: 10
-                },
-                {
-                    catSlug: '/j-league/',
-                    catID: 14
-                },
-            ];
-            for (let key in responseRanking.data.list) {
-                let item = responseRanking.data.list[key];
-                let newsSlug = item.contents_type_slug ? '/' + item.contents_type_slug + '/' : '';
-                let title = item.subject;
-                let catSlug = '';
-                let url;
-                if (title.length > 35) {
-                    title = title.substring(0, 35);
-                    title += '...';
+            try {
+                const responseRanking = await axios.get(apiRanking);
+                const topicsCategory = [
+                    {
+                        catSlug: '/news/',
+                        catID: 1
+                    },
+                    {
+                        catSlug: '/eat/',
+                        catID: 7
+                    },
+                    {
+                        catSlug: '/life/',
+                        catID: 8
+                    },
+                    {
+                        catSlug: '/feature/',
+                        catID: 9
+                    },
+                    {
+                        catSlug: '/interview/',
+                        catID: 10
+                    },
+                    {
+                        catSlug: '/j-league/',
+                        catID: 14
+                    },
+                ];
+                for (let key in responseRanking.data.list) {
+                    let item = responseRanking.data.list[key];
+                    let newsSlug = item.contents_type_slug ? '/' + item.contents_type_slug + '/' : '';
+                    let title = item.subject;
+                    let catSlug = '';
+                    let url;
+                    if (title.length > 35) {
+                        title = title.substring(0, 35);
+                        title += '...';
+                    };
+                    for (let cat in topicsCategory) {
+                        if (topicsCategory[cat].catID == item.topics_group_id) {
+                            catSlug = topicsCategory[cat].catSlug;
+                            break;
+                        }
+                    };
+                    url = catSlug + newsSlug + item.slug;
+                    if (url.includes('//')) {
+                        url = url.replace(/\/{2,}/g, '/');
+                    };
+                    contentRanking.push({
+                        title: title,
+                        url: url,
+                        thumb: item.ext_1,
+                    });
                 };
-                for (let cat in topicsCategory) {
-                    if (topicsCategory[cat].catID == item.topics_group_id) {
-                        catSlug = topicsCategory[cat].catSlug;
-                        break;
-                    }
-                };
-                url = catSlug + newsSlug + item.slug;
-                if (url.includes('//')) {
-                    url = url.replace(/\/{2,}/g, '/');
-                };
-                contentRanking.push({
-                    title: title,
-                    url: url,
-                    thumb: item.ext_1,
-                });
+            } catch (error) {
+                console.error('API ERROR:', apiRanking + ' - ' + error.message);
             };
+            
 
             //Sidebar ADS & PR API
             const apiSidebarAds = apiDomain + '/rcms-api/1/content/details/47640';
-            const responseAds = await axios.get(apiSidebarAds);
             var contentAds = [];
             var contentPR = [];
-            const itemAds = responseAds.data.details;
             const carousel = [];
             const responseAdstopics = [];
             const responseAdsRelated = [];
-
-            for (let key in itemAds.ext_1) {
-                const item = itemAds.ext_1[key];
-                let title = item.title;
-                carousel.push({
-                    title: title,
-                    url: item.url,
-                    thumb: itemAds.ext_6[key],
-                });
-            };
-            if (itemAds.ext_2[0]) {
-                for (let key in itemAds.ext_2) {
-                    let thumb = itemAds.ext_2[key];
-                        responseAdstopics.push({
-                            title: itemAds.ext_3[key].title,
-                            url: itemAds.ext_3[key].url,
-                            thumb: thumb,
-                        });
+            try {
+                const responseAds = await axios.get(apiSidebarAds);
+                const itemAds = responseAds.data.details;
+                for (let key in itemAds.ext_1) {
+                    const item = itemAds.ext_1[key];
+                    let title = item.title;
+                    carousel.push({
+                        title: title,
+                        url: item.url,
+                        thumb: itemAds.ext_6[key],
+                    });
                 };
-            } else {
-                responseAdstopics.push({
-                    notAvailable: '1',
-                });
-            };
-            if (itemAds.ext_4[0]) {
-                for (let key in itemAds.ext_4) {
-                    let thumb = itemAds.ext_4[key];
-                        responseAdsRelated.push({
-                            title: itemAds.ext_5[key].title,
-                            url: itemAds.ext_5[key].url,
-                            thumb: thumb,
-                        });
+                if (itemAds.ext_2[0]) {
+                    for (let key in itemAds.ext_2) {
+                        let thumb = itemAds.ext_2[key];
+                            responseAdstopics.push({
+                                title: itemAds.ext_3[key].title,
+                                url: itemAds.ext_3[key].url,
+                                thumb: thumb,
+                            });
+                    };
+                } else {
+                    responseAdstopics.push({
+                        notAvailable: '1',
+                    });
                 };
-            } else {
-                responseAdsRelated.push({
-                    notAvailable: '1',
-                });
-            }; 
+                if (itemAds.ext_4[0]) {
+                    for (let key in itemAds.ext_4) {
+                        let thumb = itemAds.ext_4[key];
+                            responseAdsRelated.push({
+                                title: itemAds.ext_5[key].title,
+                                url: itemAds.ext_5[key].url,
+                                thumb: thumb,
+                            });
+                    };
+                } else {
+                    responseAdsRelated.push({
+                        notAvailable: '1',
+                    });
+                }; 
+            } catch (error) {
+                console.error('API ERROR:', apiEbook + ' - ' + error.message);
+            };
             contentAds = responseAdsRelated;
             contentPR = responseAdstopics;
 
 
             //Generate News categories landing and setup SSG sidebar
             const apiNewsCategory = apiDomain + '/rcms-api/1/content/category?topics_group_id=1';
-            const responseNewsCat = await axios.get(apiNewsCategory);
-            var newsCat = responseNewsCat.data.list;
-            for (const topic of newsCat) {
-                if (topic.slug && topic.child_level == 2) {
-                    let url = '/news/' + topic.slug + '/';
-                    routes.push({
-                        route: url,
-                        payload: { 
-                            contentRanking,
-                            contentEbook,
-                            contentAds,
-                            contentPR,
-                        }
-                    });
-                }
+            try {
+                const responseNewsCat = await axios.get(apiNewsCategory);
+                var newsCat = responseNewsCat.data.list;
+                for (const topic of newsCat) {
+                    if (topic.slug && topic.child_level == 2) {
+                        let url = '/news/' + topic.slug + '/';
+                        routes.push({
+                            route: url,
+                            payload: { 
+                                contentRanking,
+                                contentEbook,
+                                contentAds,
+                                contentPR,
+                            }
+                        });
+                    }
+                };
+            } catch (error) {
+                console.error('API ERROR:', apiEbook + ' - ' + error.message);
             };
+            
 
             //Topics API
             for (const topic of topics) {
             // if (topic.catSlug == '/news/') {
                 var index = topics.indexOf(topic)+1;
                 var apiUrl;
-                // if (process.env.NODE_ENV === 'development') {
-                //     apiUrl = 'https://dev-mtown.g.kuroco.app/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=2';
-                // } else {
-                //     apiUrl = 'https://dev-mtown.g.kuroco.app/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=9999999';
-                // };
                 apiUrl = apiDomain + '/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=' + generateLimit;
                 var response = await axios.get(apiUrl);
                 var articles = response.data.list;
@@ -695,7 +490,7 @@ export default {
                 };
 
                 //Additional loop for pagination
-                let pageNum = response.data.pageInfo.totalPageCnt;
+                let pageNum = testMode ? 0 : response.data.pageInfo.totalPageCnt;
                 // pageNum = 0;
                 if (pageNum >= 2){
                     for (let i = 2; i <= pageNum; i++){
@@ -763,35 +558,6 @@ export default {
             // };
             };
 
-            // routes.push('/column/testing');
-
-            // console.log('here');
-            // console.log(routes);
-            // if (routes.route == '/log') {
-            //     console.log('hahah');
-            // };
-
-            // const response = await axios.get('https://api.mtown.my/rcms-api/1/content/list?topics_group_id=1&cnt=10')
-            // const articles = response.data.list
-            // //   console.log(response.data.pageInfo);
-            // //   console.log('hihih');
-            // //   console.log(response.data.pageInfo.totalPageCnt);
-            // //   let count = 1;
-            // for (const article of articles) {
-            //     // console.log(count);
-            //     // count++;
-            //     // console.log(article.slug);
-            //     let url = '/news/'
-            //     if (article.contents_type_slug) {
-            //         url += article.contents_type_slug + '/';
-            //     };
-            //     let slug = article.slug ? article.slug : article.topics_id
-            //     url += slug;
-            //     routes.push({
-            //         route: url,
-            //         // route: `/news/${category}/${slug}`,
-            //     })
-            // }
             return routes
         }
     },
@@ -802,15 +568,5 @@ export default {
     sitemap: {
         hostname: 'https://www.mtown.my',
         gzip: true, 
-        // routes: testing,
-        // // routes: async () => {
-        // //     console.log('start sitemap');
-        // //     console.log(generateRoute);
-        // //     // console.log(testing);
-        // //   // Generate dynamic routes here based on your project's data
-        // //   return [
-        // //     testing
-        // //   ];
-        // // }
     },
 };
