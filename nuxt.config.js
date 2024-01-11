@@ -235,7 +235,7 @@ export default {
             const siteURL = 'https://www.mtown.my';
             const routes = [];
             const listGenerate = [];
-            var testMode = true; //Change to true or false if you want to enable dev mode for quick generate
+            var testMode = false; //Change to true or false if you want to enable dev mode for quick generate
             const generateLimit = testMode ? 50 : 999; //Maximum topics per pagination is 999
             const topics = [
                 {
