@@ -15,13 +15,13 @@ jobs:
   # for Pull Request (exclude merged)
   pullreq_build:
     name: Build(pullreq)
-    if: (github.repository == 'tk-git-admin/mtown' && github.event_name == 'issue_comment' && startsWith(github.event.comment.body, '/kuroco stage') && github.event.issue.pull_request != null)
+    if: (github.repository == 'markdiverta/testing_eneos' && github.event_name == 'issue_comment' && startsWith(github.event.comment.body, '/kuroco stage') && github.event.issue.pull_request != null)
     runs-on: ubuntu-latest
     steps:
       - name: "Get branch name and sha"
         id: get_branch
         run: |
-          PR=$(curl -H "Authorization: token 444e5aedae994b8b1d8155dec3a0cb0d" https://api.mtown.my/direct/menu/github/?pr=${{ github.event.issue.pull_request.url }})
+          PR=$(curl -H "Authorization: token b7b91526989532a244039a0dc159d915" https://mark-test.g.kuroco.app/direct/menu/github/?pr=${{ github.event.issue.pull_request.url }})
           echo "branch=$(echo $PR | jq -r '.ref')" >> $GITHUB_OUTPUT
           echo "sha=$(echo $PR | jq -r '.sha')" >> $GITHUB_OUTPUT
       - name: Checkout Repo
@@ -51,14 +51,14 @@ jobs:
       - name: Webhook
         uses: diverta/workflow-webhook@v2
         env:
-          webhook_url: "https://api.mtown.my/direct/menu/github/"
-          webhook_secret: "444e5aedae994b8b1d8155dec3a0cb0d"
-          data: '{"single_zip":"1","domain":"www.mtown.my","pr":"${{ github.event.issue.pull_request.url }}",  "repository":"${{ github.repository }}", "run_id":"${{ github.run_id }}", "hash":"${{ steps.get_branch.outputs.sha }}"}'
+          webhook_url: "https://mark-test.g.kuroco.app/direct/menu/github/"
+          webhook_secret: "b7b91526989532a244039a0dc159d915"
+          data: '{"single_zip":"1","domain":"mark-test.g.kuroco-front.app","pr":"${{ github.event.issue.pull_request.url }}",  "repository":"${{ github.repository }}", "run_id":"${{ github.run_id }}", "hash":"${{ steps.get_branch.outputs.sha }}"}'
           
   #for Push
   pushed_build:
     name: Build(pushed)
-    if: (github.repository == 'tk-git-admin/mtown' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch'))
+    if: (github.repository == 'markdiverta/testing_eneos' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch'))
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -84,6 +84,6 @@ jobs:
       - name: Webhook
         uses: diverta/workflow-webhook@v2
         env:
-          webhook_url: "https://api.mtown.my/direct/menu/github/"
-          webhook_secret: "444e5aedae994b8b1d8155dec3a0cb0d"
-          data: '{"single_zip":"1","domain":"www.mtown.my", "repository":"${{ github.repository }}", "run_id":"${{ github.run_id }}", "hash":"${{ github.sha }}"}'
+          webhook_url: "https://mark-test.g.kuroco.app/direct/menu/github/"
+          webhook_secret: "b7b91526989532a244039a0dc159d915"
+          data: '{"single_zip":"1","domain":"mark-test.g.kuroco-front.app", "repository":"${{ github.repository }}", "run_id":"${{ github.run_id }}", "hash":"${{ github.sha }}"}'
